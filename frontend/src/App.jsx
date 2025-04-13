@@ -12,7 +12,7 @@ import Navigation from './components/Navigation'
 
 const App = () => {
   return (
-    <div className='mx-4 sm:mx-[1%]'>
+    <div className='mx-4 sm:mx-[10%]'>
       <Navigation/>
       <Routes>
         <Route path='/' element={<Home/>} />
