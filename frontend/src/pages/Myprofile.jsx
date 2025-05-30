@@ -52,7 +52,7 @@ const MyProfile = () => {
                         {userData.address.line1}
                         <br />
                         { userData.address.line2}
-                    </p>
+                      </p>
                 }
             </div>
         </div>
@@ -76,11 +76,11 @@ const MyProfile = () => {
                 }
             </div>
         </div>
-        <div>
+        <div className='mt-10'>
             {
                 isEdit
-                ? <button  className =' border border-b-blue-600 px-8 py-2 rounded-full hover:bg-blue-500 hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(false)}> Save information</button>
-                : <button  className =' border border-b-blue-600 px-8 py-2 rounded-full  hover:bg-blue-500 hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(true)}> Edit</button>
+                ? <button  className =' border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(false)}> Save information</button>
+                : <button  className =' border border-primary px-8 py-2 rounded-full  hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(true)}> Edit</button>
             }
         </div>
       
