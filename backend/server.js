@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import 'dotenv/config'
-import connectDB from './config/mongoose'
+import connectDB from './config/mongoose.js'
 import connectCloudinary from './config/cloudinary.js'
 const app =express();
 const port = process.env.port || 4000
