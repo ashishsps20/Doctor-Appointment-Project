@@ -5,6 +5,6 @@ const connectDB= async()=>{
      mongoose.connection.on('connected',()=>{
           console.log("Database Connected");
      })
-     await mongoose.connect('${process.env.MONGOOSE_URI}/prescripto')
+     await mongoose.connect(`${process.env.MONGOOSE_URI}/prescripto`)
 }
 export default connectDB;
