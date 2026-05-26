@@ -2,10 +2,11 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
+import jwt from 'jsonwebtoken'
 
 
 // api for adding doctor by admin
-const addDoctor = async (req, res) => {
+export const addDoctor = async (req, res) => {
     try {
         const { name, email, password,speciality, degree, experience, about,  fee, address } = req.body
         const image = req.file
@@ -59,4 +60,25 @@ const addDoctor = async (req, res) => {
     }
 }
 
-export default addDoctor
+
+
+// Api for admin login
+export const loginAdmin = async (req, res) => {
+    try {
+        const { email, password } = req.body || {}
+        if (!email || !password) {
+            return res.status(400).json({ message: "All fields are required" })
+        }
+        if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
+            return res.status(401).json({ message: "Invalid email or password" })
+        }
+
+        const token = jwt.sign( email+password , process.env.JWT_SECRET)
+        res.status(200).json({ message: "Admin logged in successfully", token })
+
+    } catch (error) {
+        console.error('Login admin error:', error?.message || error)
+        res.status(500).json({ message: "Internal Server Error" })
+    }
+}
+
