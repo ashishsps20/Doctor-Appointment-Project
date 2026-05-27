@@ -5,10 +5,10 @@ import { NavLink } from 'react-router-dom'
 import { assets } from '../assets/assets'
 
 const Sidebar = () => {
-    const token = useContext(AdminContext).token
+    const aToken = useContext(AdminContext).aToken
   return (
     <div>
-        {token && (
+        {aToken && (
             <ul className='min-h-[calc(100vh-96px)] w-64 space-y-2 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm'>
                 <NavLink to='/admin-dashboard' className ={({isActive}) => `flex items-center gap-3 rounded-xl px-3 py-3 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 ${isActive ? 'bg-slate-100 text-slate-900' : ''}`}>
                     <img src={assets.home_icon} alt='Dashboard' className='w-5' />

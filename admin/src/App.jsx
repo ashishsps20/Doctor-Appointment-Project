@@ -12,8 +12,8 @@ import AddDoctor from './pages/Admin/AddDoctor';
 
 const App = () => {
 
-  const token = useContext(AdminContext).token;
-  return  token ? (
+  const aToken = useContext(AdminContext).aToken;
+  return  aToken ? (
     <div className=' bg-[#F8F9FD]'>
       <ToastContainer />
       <Navbar />

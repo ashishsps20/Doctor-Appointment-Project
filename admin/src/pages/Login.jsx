@@ -5,7 +5,7 @@ import { useContext } from 'react'
 import { toast } from 'react-toastify'
 const Login = () => {
     const [state, setState] = useState('Admin')
-    const {setToken, backendUrl} = useContext(AdminContext)
+    const {setAToken, backendUrl} = useContext(AdminContext)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -18,8 +18,8 @@ const Login = () => {
             if(state === 'Admin'){
                       const {data} = await axios.post(`${backendUrl}/api/admin/login`, {email, password});
                       if (data.token) {
-                          localStorage.setItem('adminToken', data.token);
-                          setToken(data.token);
+                          localStorage.setItem('aToken', data.token);
+                          setAToken(data.token);
                       }
                       else{
                         toast.error(data.message || 'Login failed');
