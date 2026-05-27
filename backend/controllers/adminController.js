@@ -18,6 +18,12 @@ export const addDoctor = async (req, res) => {
         if(!validator.isEmail(email)){
             return res.status(400).json({ message: "Invalid email" })
         }
+
+        // quick duplicate email check before expensive operations (upload/hash)
+        const existingDoctor = await doctorModel.findOne({ email })
+        if (existingDoctor) {
+            return res.status(400).json({ message: 'Email already exists' })
+        }
         // validate password
         if(!validator.isStrongPassword(password)){
             return res.status(400).json({ message: "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one symbol" })
@@ -56,6 +62,10 @@ export const addDoctor = async (req, res) => {
 
     } catch (error) {
         console.error('Add doctor error:', error?.message || error)
+        
+        if (error?.code === 11000 && error.keyValue && error.keyValue.email) {
+            return res.status(400).json({ message: 'Email already exists' })
+        }
         res.status(500).json({ message: "Internal Server Error" })
     }
 }
@@ -73,8 +83,8 @@ export const loginAdmin = async (req, res) => {
             return res.status(401).json({ message: "Invalid email or password" })
         }
 
-        const token = jwt.sign( email+password , process.env.JWT_SECRET)
-        res.status(200).json({ message: "Admin logged in successfully", token })
+        const atoken = jwt.sign( email+password , process.env.JWT_SECRET)
+        res.status(200).json({ message: "Admin logged in successfully",    token: atoken })
 
     } catch (error) {
         console.error('Login admin error:', error?.message || error)

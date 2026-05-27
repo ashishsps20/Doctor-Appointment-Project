@@ -1,6 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Sora:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
+::-webkit-scrollbar {
+  @apply hidden
+}
+
 :root {
 	--font-display: "DM Serif Display", serif;
 	--font-sans: "Sora", sans-serif;
