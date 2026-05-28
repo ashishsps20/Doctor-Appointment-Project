@@ -1,27 +1,68 @@
 import React,{useState} from 'react'
-import {assets} from '../assets/assets_frontend/assets'
+import { AppContext } from '../context/AppContext';
+import { useContext } from 'react';
+import { assets } from '../assets/assets_frontend/assets';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const MyProfile = () => {
 
-    const [userData,setUserData] = useState({
-        name :" Vishnukant Bagri",
-        image: assets.profile_pic,
-        email:"vishnukantbagri@gmail.com",
-        phone: '+ 84 3553 0071',
-        address:{
-            line1: "57th Cross,satna",
-            line2: "Circle,Dhawari Road,London"
-        },
-        gender :'Male',
-        dob: '2004-05-04'
-    })
+    const { userData, setUserData ,token,backendURL,loadUserProfileData} = useContext(AppContext);   
 
     const [isEdit, setIsEdit]  = useState(false)
+    const[image,setImage] = useState(false);
 
-  return (
+    const updateUserProfileData = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('name', userData.name);
+            formData.append('phone', userData.phone);
+            formData.append('dob', userData.dob);
+            formData.append('gender', userData.gender);
+            formData.append('address', JSON.stringify(userData.address));
+
+            image && formData.append('image', image);
+
+            const { data} = await axios.post(`${backendURL}/api/user/update-profile`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'token': token,
+                }
+            });
+
+            if (data.success) {
+                toast.success(data.message || 'Profile updated successfully');
+                setIsEdit(false);
+                setImage(false);
+                await loadUserProfileData(token);
+            }
+            else{
+                toast.error(data.message || 'Failed to update profile');
+            }
+        }
+        catch(error){
+            toast.error('Failed to update profile');
+            console.error('Failed to update profile', error);
+        }
+    }   
+
+  return userData && (
     <div className=' max-w-lg flex flex-col gap-2 text-sm'>
-        <img  className ='w-36 rounded' src={userData.image} alt="" />
+        {
+            isEdit
+            ?<label htmlFor="image" >
+                <div className="inline-block relative cursor-pointer">
+                    <img className="w-36 rounded opacity-70" src={image ? URL.createObjectURL(image) : (userData.image || assets.profile_pic)} alt=""/>
+                    {!image && (
+                        <img className="w-10 absolute bottom-12 right-12" src={assets.upload_icon} alt=""/>
+                    )}
+                </div>
+                <input onChange={(e) => setImage(e.target.files[0])} type='file' id="image" hidden/>
+            </label>
+            :<img  className ='w-36 rounded' src={userData.image || assets.profile_pic} alt="" />
+        }
+    
 
         {
             isEdit
@@ -79,7 +120,7 @@ const MyProfile = () => {
         <div className='mt-10'>
             {
                 isEdit
-                ? <button  className =' border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(false)}> Save information</button>
+                ? <button  className =' border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={() => updateUserProfileData()}> Save information</button>
                 : <button  className =' border border-primary px-8 py-2 rounded-full  hover:bg-primary hover:text-white transition-all cursor-pointer' onClick={() => setIsEdit(true)}> Edit</button>
             }
         </div>

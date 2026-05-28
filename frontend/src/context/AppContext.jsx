@@ -8,9 +8,10 @@ export const AppContext = createContext();
 export const AppContextProvider = (props)=>{
     const currencySymbol = '₹';
     const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
-    const [doctors, setDoctors] = useState([]);
 
+    const [doctors, setDoctors] = useState([]);
     const[token,setToken] = useState(localStorage.getItem('token') || null);
+    const[userData,setUserData] = useState(false);
 
 
     const getDoctorsData = async () => {
@@ -27,18 +28,48 @@ export const AppContextProvider = (props)=>{
         }
     };
 
+    const loadUserProfileData = async (token) => {
+        try {
+            const { data } = await axios.get(`${backendURL}/api/user/get-profile`, {    
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    token: token
+                }
+            });
+            if (data?.success && data.user) {
+                setUserData(data.user);
+            } else {
+                toast.error(data?.message || 'Failed to load user data');
+            }
+        } catch (error) {
+            console.error(error?.response?.data?.message || 'Failed to load user data');
+            toast.error(error?.response?.data?.message || 'Failed to load user data');
+        }
+    };
+
     const value = {
         doctors,
         currencySymbol,
         getDoctorsData,
         token,
         setToken,
-        backendURL
+        backendURL,
+        userData,
+        setUserData,
+        loadUserProfileData
     };
 
     useEffect(() => {
         getDoctorsData();
     }, []);
+
+    useEffect(() => {
+        if (token) {
+            loadUserProfileData(token);
+        } else {
+            setUserData(false);
+        }
+    }, [token]);
 
     return (
         <AppContext.Provider value={value}>
