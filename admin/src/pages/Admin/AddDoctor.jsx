@@ -99,6 +99,7 @@ const AddDoctor = () => {
                             <p className='text-sm font-medium text-slate-600'>Doctor Name</p>
                             <input value={name} onChange={(e)=> setName(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Name' required />
                         </div>
+                        
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Doctor Email</p>
                             <input value={email} onChange={(e)=> setEmail(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="email" placeholder='Email' required />
