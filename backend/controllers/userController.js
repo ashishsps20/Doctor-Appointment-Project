@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
 import Razorpay from 'razorpay'
+import { v2 as cloudinary } from 'cloudinary'
 
 // api to register user
 
@@ -87,6 +88,44 @@ export const getProfile = async (req, res) => {
 		console.log('Get user info error:', error?.message || error)
 		res.status(500).json({ success: false, message: 'Internal Server Error' })
 	}
+}
+
+// API to update user profile
+export const updateProfile = async (req, res) => {
+    try {
+        const userId = req.userId
+        const { name,phone,address,dob,gender} = req.body || {}
+        const imageFile = req.file
+        const updateData = {}
+
+        if (!name || !phone || !dob|| !gender) 
+            return res.status(400).json({ success: false, message: 'Name, phone, dob and gender are required' })
+        
+        await userModel.findByIdAndUpdate(userId,{name,phone,address:JSON.parse(address),dob,gender}) // check if user exists
+
+		if (imageFile) {
+			const imageUpdate = await new Promise((resolve, reject) => {
+				const uploadStream = cloudinary.uploader.upload_stream(
+					{ resource_type: 'image' },
+					(error, result) => {
+						if (error) return reject(error)
+						resolve(result)
+					}
+				)
+				uploadStream.end(imageFile.buffer)
+			})
+			const imageUrl = imageUpdate.secure_url
+
+			await userModel.findByIdAndUpdate(userId, { image: imageUrl })
+		}
+        const updatedUser = await userModel.findById(userId).select('-password')     
+
+        res.status(200).json({ success: true, message: 'Profile updated successfully', user: updatedUser })
+        
+    } catch (error) {
+        console.log('Update profile error:', error?.message || error)
+        res.status(500).json({ success: false, message: 'Internal Server Error' })
+    }
 }
 
 // API to book appointment
