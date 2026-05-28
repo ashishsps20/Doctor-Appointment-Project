@@ -3,6 +3,92 @@ import userModel from "../models/userModel.js";
 import appointmentModel from "../models/appointmentModel.js";
 import Razorpay from "razorpay";
 import crypto from "crypto";
+import validator from 'validator'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
+// api to register user
+const registerUser = async (req, res) => {   
+    try {
+        const { name, email, password } = req.body || {}
+        if (!name || !email || !password) {
+            return res.status(400).json({ success: false, message: "All fields are required" })
+        }
+        // check if user already exists
+        if(!validator.isEmail(email)){
+            return res.status(400).json({ success: false, message: "Invalid email" })
+        }
+        if(password.length < 8){
+            return res.status(400).json({ success: false, message: "Password must be at least 8 characters long" })
+        }
+
+        const existingUser = await userModel.findOne({ email })
+        if (existingUser) {
+            return res.status(409).json({ success: false, message: "Email already registered" })
+        }
+
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const userData = {
+            name,
+            email,
+            password: hashedPassword
+        }
+        
+        const newUser = new userModel(userData)
+        const user = await newUser.save();
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+
+        res.status(200).json({ success: true, message: "User registered successfully", token })
+
+    } catch (error) {
+        if (error?.code === 11000) {
+            return res.status(409).json({ success: false, message: "Email already registered" })
+        }
+        console.log('Register user error:', error?.message || error)
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}
+
+// api for user login
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body || {}
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: "All fields are required" })
+        }
+        const user = await userModel.findOne({ email })
+        if (!user) {
+            return res.status(401).json({ success: false, message: "User does not exist" })
+        }
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: "Invalid email or password" })
+        }
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+        res.status(200).json({ success: true, message: "User logged in successfully", token })
+    }
+    catch (error) {
+        console.log('Login user error:', error?.message || error)
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}
+
+// api to get user info
+const getProfile = async (req, res) => {
+    try {
+        const userId = req.userId
+        const userData = await userModel.findById(userId).select('-password')
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }   
+        res.status(200).json({ success: true, user: userData })
+    } catch (error) {
+        console.log('Get user info error:', error?.message || error)
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}
 
 // API to book appointment
 const bookAppointment = async (req, res) => {
@@ -154,7 +240,7 @@ const verifyRazorpay = async (req, res) => {
        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id); // razorpay ke server se order ki details fetch karna
 
        //testing ke liye use ,i m using (orderInfo.status === 'paid' || orderInfo.status === 'created')
-       if(orderInfo.status === 'paid'){
+       if(orderInfo.status === 'paid' || orderInfo.status === 'created'){
             // update appointment payment status to true
             await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {payment: true});
             res.json({success: true, message: 'Payment Successful'})
@@ -168,4 +254,4 @@ const verifyRazorpay = async (req, res) => {
 }
 
 
-export  {bookAppointment, listAppointments,cancelAppointment, paymentRazorpay, verifyRazorpay};
+export  {registerUser, loginUser, getProfile, bookAppointment, listAppointments,cancelAppointment, paymentRazorpay, verifyRazorpay};

@@ -4,6 +4,7 @@ import 'dotenv/config'
 import connectDB from './config/mongoose.js'
 import connectCloudinary from './config/cloudinary.js'
 import adminRouter from './routes/adminRoute.js'
+import doctorRouter from './routes/doctorRoute.js'
 import userRouter from './routes/userRoute.js'
 //  app configuration
 const app = express();
@@ -19,10 +20,11 @@ app.use(cors());
 // api endpoints
 
 app.use('/api/admin', adminRouter)
+app.use('/api/doctor', doctorRouter)
 app.use('/api/user', userRouter)
 
 app.get('/',(req,res)=>{
-    res.send("API working");
+    res.status(200).json({ success: true, message: "API working" })
 })
 app.listen(port,()=>{
      console.log("Server started at http://localhost:4000");

@@ -11,16 +11,22 @@ export const addDoctor = async (req, res) => {
         const { name, email, password,speciality, degree, experience, about,  fee, address } = req.body
         const image = req.file
         if (!name || !email || !password || !image || !speciality || !degree || !experience || !about || !fee || !address) {
-            return res.status(400).json({ message: "All fields are required" })
+            return res.status(400).json({ success: false, message: "All fields are required" })
         }
         
         // validate email
         if(!validator.isEmail(email)){
-            return res.status(400).json({ message: "Invalid email" })
+            return res.status(400).json({ success: false, message: "Invalid email" })
+        }
+
+        // quick duplicate email check before expensive operations (upload/hash)
+        const existingDoctor = await doctorModel.findOne({ email })
+        if (existingDoctor) {
+            return res.status(400).json({ success: false, message: 'Email already exists' })
         }
         // validate password
         if(!validator.isStrongPassword(password)){
-            return res.status(400).json({ message: "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one symbol" })
+            return res.status(400).json({ success: false, message: "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number and one symbol" })
         }
 
         // hashing password
@@ -52,14 +58,17 @@ export const addDoctor = async (req, res) => {
 
         const newDoctor = new doctorModel(doctorData)
         await newDoctor.save()
-        res.status(200).json({ message: "Doctor added successfully" })
+        res.status(200).json({ success: true, message: "Doctor added successfully" })
 
     } catch (error) {
         console.error('Add doctor error:', error?.message || error)
-        res.status(500).json({ message: "Internal Server Error" })
+        
+        if (error?.code === 11000 && error.keyValue && error.keyValue.email) {
+            return res.status(400).json({ success: false, message: 'Email already exists' })
+        }
+        res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
-
 
 
 // Api for admin login
@@ -67,18 +76,29 @@ export const loginAdmin = async (req, res) => {
     try {
         const { email, password } = req.body || {}
         if (!email || !password) {
-            return res.status(400).json({ message: "All fields are required" })
+            return res.status(400).json({ success: false, message: "All fields are required" })
         }
         if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
-            return res.status(401).json({ message: "Invalid email or password" })
+            return res.status(401).json({ success: false, message: "Invalid email or password" })
         }
 
-        const token = jwt.sign( email+password , process.env.JWT_SECRET)
-        res.status(200).json({ message: "Admin logged in successfully", token })
+        const atoken = jwt.sign( email+password , process.env.JWT_SECRET)
+        res.status(200).json({ success: true, message: "Admin logged in successfully",    atoken: atoken })
 
     } catch (error) {
         console.error('Login admin error:', error?.message || error)
-        res.status(500).json({ message: "Internal Server Error" })
+        res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
 
+// Api to get doctors list for admin panel
+export const allDoctors = async(req,res) => {
+    try {
+        const doctors = await doctorModel.find().select('-password').sort({ date: -1 })
+
+        res.status(200).json({ success: true, doctors })
+    } catch (error) {
+        console.error('Get all doctors error:', error?.message || error)
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}

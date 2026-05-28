@@ -6,8 +6,7 @@ import { assets } from '../assets/assets_frontend/assets';
 import RealatedDoctors from '../components/RealatedDoctors';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { backendUrl } from '../utils/config';
-import { getDoctorsData } from '../context/AppContext';
+//import { backendUrl } from '../utils/config';
 import { useCallback } from 'react';
 
 const Appointment = () => {
@@ -157,7 +156,7 @@ const Appointment = () => {
             <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
           </div>
           <p className='text-gray-500 font-medium mt-4'>
-            Appointment fee: <span className='text-gray-600'>{currencySymbol}{docInfo.fees}</span></p>
+            Appointment fee: <span className='text-gray-600'>{currencySymbol}{docInfo.fee}</span></p>
         </div>
 
       </div>

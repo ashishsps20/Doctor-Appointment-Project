@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Sora:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@83.6,438&family=Outfit:wght@100..900&family=Poppins:wght@500&display=swap');
+
+::-webkit-scrollbar {
+  @apply hidden
+}
 
 :root {
 	--font-display: "DM Serif Display", serif;
@@ -12,4 +17,7 @@ body {
 	font-family: var(--font-sans);
 	color: var(--ink);
 	background-color: var(--bg);
+}
+*{
+  /* font-family: Outfit; */
 }
