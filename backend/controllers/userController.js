@@ -72,3 +72,19 @@ export const loginUser = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
+
+
+// api to get user info
+export const getProfile = async (req, res) => {
+    try {
+        const userId = req.userId
+        const userData = await userModel.findById(userId).select('-password')
+        if (!userData) {
+            return res.status(404).json({ success: false, message: "User not found" })
+        }   
+        res.status(200).json({ success: true, user: userData })
+    } catch (error) {
+        console.log('Get user info error:', error?.message || error)
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}
