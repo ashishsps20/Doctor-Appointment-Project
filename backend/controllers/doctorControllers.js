@@ -23,3 +23,13 @@ export const changeAvailability = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }
+
+export const doctorsList = async (req, res) => {
+    try {
+        const doctors = await doctorModel.find().select(['-password','-email']).sort({ date: -1 }) 
+        res.status(200).json({ success: true, doctors })
+    } catch (error) {
+        console.error('Get doctors list error:', error?.message || error)
+        res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}
