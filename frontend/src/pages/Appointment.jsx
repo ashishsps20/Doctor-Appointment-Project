@@ -6,9 +6,6 @@ import { assets } from '../assets/assets_frontend/assets';
 import RealatedDoctors from '../components/RealatedDoctors';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { backendUrl } from '../utils/config';
-import { getDoctorsData } from '../context/AppContext';
-import { useCallback } from 'react';
 
 const Appointment = () => {
 
@@ -31,6 +28,8 @@ const Appointment = () => {
 
   const getAvailableSlots = async () => {
     setDocSlots([]);
+
+    const slotsBooked = docInfo?.slots_booked || {};
 
     // getting current date
     let today = new Date();
@@ -68,10 +67,10 @@ const Appointment = () => {
         const slotDate = day + "_" + month + "_" + year;
         const slotTime = formattedTime;
 
-        const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true;
+        const isSlotAvailable = slotsBooked[slotDate] && slotsBooked[slotDate].includes(slotTime) ? false : true;
 
-        if(bookAppointment){
-           // add slot to array
+        if (isSlotAvailable) {
+          // add slot to array
           timeSlots.push({
             datetime: new Date(currentDate),
             time: formattedTime,
