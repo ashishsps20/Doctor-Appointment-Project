@@ -15,15 +15,17 @@ const Login = () => {
     const onSubmitHandler =async (event) => {
         event.preventDefault()
         try {
-            if(state === 'Admin'){
-                      const {data} = await axios.post(`${backendUrl}/api/admin/login`, {email, password});
-                      if (data.token) {
-                          localStorage.setItem('aToken', data.token);
-                          setAToken(data.token);
-                      }
-                      else{
-                        toast.error(data.message || 'Login failed');
-                      }
+                        if(state === 'Admin'){
+                                            const {data} = await axios.post(`${backendUrl}/api/admin/login`, {email, password});
+                                            const token = data?.token || data?.atoken;
+                                            if (data?.success && token) {
+                                                    localStorage.setItem('aToken', token);
+                                                    setAToken(token);
+                                                    toast.success(data.message || 'Admin logged in successfully');
+                                            }
+                                            else{
+                                                toast.error(data.message || 'Login failed');
+                                            }
             }
             else{
 

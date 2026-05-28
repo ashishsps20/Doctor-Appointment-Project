@@ -19,7 +19,7 @@ app.use(cors());
 
 app.use('/api/admin', adminRouter)
 app.get('/',(req,res)=>{
-    res.send("API working");
+    res.status(200).json({ success: true, message: "API working" })
 })
 app.listen(port,()=>{
      console.log("Server started at http://localhost:4000");

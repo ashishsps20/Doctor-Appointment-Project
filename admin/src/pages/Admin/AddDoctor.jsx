@@ -55,8 +55,8 @@ const AddDoctor = () => {
                 }
             })
 
-            if(!data) {
-                toast.error('Failed to add doctor')
+            if(!data || !data.success) {
+                toast.error(data?.message || 'Failed to add doctor')
             }
             else{
                 toast.success(data.message || 'Doctor added successfully')
