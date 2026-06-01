@@ -1,11 +1,12 @@
-import doctorModel from "../models/doctorModel.js";
 import userModel from "../models/userModel.js";
-import appointmentModel from "../models/appointmentModel.js";
-import Razorpay from "razorpay";
 import crypto from "crypto";
 import validator from 'validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import doctorModel from '../models/doctorModel.js'
+import appointmentModel from '../models/appointmentModel.js'
+import Razorpay from 'razorpay'
+import { v2 as cloudinary } from 'cloudinary'
 
 // api to register user
 const registerUser = async (req, res) => {   
@@ -22,71 +23,108 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ success: false, message: "Password must be at least 8 characters long" })
         }
 
-        const existingUser = await userModel.findOne({ email })
-        if (existingUser) {
-            return res.status(409).json({ success: false, message: "Email already registered" })
-        }
+		const existingUser = await userModel.findOne({ email })
+		if (existingUser) {
+			return res.status(409).json({ success: false, message: 'Email already registered' })
+		}
 
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt);
-        const userData = {
-            name,
-            email,
-            password: hashedPassword
-        }
-        
-        const newUser = new userModel(userData)
-        const user = await newUser.save();
+		const salt = await bcrypt.genSalt(10)
+		const hashedPassword = await bcrypt.hash(password, salt)
+		const userData = {
+			name,
+			email,
+			password: hashedPassword
+		}
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+		const newUser = new userModel(userData)
+		const user = await newUser.save()
 
-        res.status(200).json({ success: true, message: "User registered successfully", token })
+		const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
 
-    } catch (error) {
-        if (error?.code === 11000) {
-            return res.status(409).json({ success: false, message: "Email already registered" })
-        }
-        console.log('Register user error:', error?.message || error)
-        res.status(500).json({ success: false, message: "Internal Server Error" })
-    }
+		res.status(200).json({ success: true, message: 'User registered successfully', token })
+	} catch (error) {
+		if (error?.code === 11000) {
+			return res.status(409).json({ success: false, message: 'Email already registered' })
+		}
+		console.log('Register user error:', error?.message || error)
+		res.status(500).json({ success: false, message: 'Internal Server Error' })
+	}
 }
 
 // api for user login
+
 const loginUser = async (req, res) => {
-    try {
-        const { email, password } = req.body || {}
-        if (!email || !password) {
-            return res.status(400).json({ success: false, message: "All fields are required" })
-        }
-        const user = await userModel.findOne({ email })
-        if (!user) {
-            return res.status(401).json({ success: false, message: "User does not exist" })
-        }
-        const isMatch = await bcrypt.compare(password, user.password)
-        if (!isMatch) {
-            return res.status(401).json({ success: false, message: "Invalid email or password" })
-        }
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
-        res.status(200).json({ success: true, message: "User logged in successfully", token })
-    }
-    catch (error) {
-        console.log('Login user error:', error?.message || error)
-        res.status(500).json({ success: false, message: "Internal Server Error" })
-    }
+	try {
+		const { email, password } = req.body || {}
+		if (!email || !password) {
+			return res.status(400).json({ success: false, message: 'All fields are required' })
+		}
+		const user = await userModel.findOne({ email })
+		if (!user) {
+			return res.status(401).json({ success: false, message: 'User does not exist' })
+		}
+		const isMatch = await bcrypt.compare(password, user.password)
+		if (!isMatch) {
+			return res.status(401).json({ success: false, message: 'Invalid email or password' })
+		}
+		const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+		res.status(200).json({ success: true, message: 'User logged in successfully', token })
+	} catch (error) {
+		console.log('Login user error:', error?.message || error)
+		res.status(500).json({ success: false, message: 'Internal Server Error' })
+	}
 }
 
 // api to get user info
 const getProfile = async (req, res) => {
+	try {
+		const userId = req.userId
+		const userData = await userModel.findById(userId).select('-password')
+		if (!userData) {
+			return res.status(404).json({ success: false, message: 'User not found' })
+		}
+		res.status(200).json({ success: true, user: userData })
+	} catch (error) {
+		console.log('Get user info error:', error?.message || error)
+		res.status(500).json({ success: false, message: 'Internal Server Error' })
+	}
+}
+
+// API to update user profile
+const updateProfile = async (req, res) => {
     try {
         const userId = req.userId
-        const userData = await userModel.findById(userId).select('-password')
-        if (!userData) {
-            return res.status(404).json({ success: false, message: "User not found" })
-        }   
-        res.status(200).json({ success: true, user: userData })
+        const { name,phone,address,dob,gender} = req.body || {}
+        const imageFile = req.file
+        const updateData = {}
+
+        if (!name || !phone || !dob|| !gender) 
+            return res.status(400).json({ success: false, message: 'Name, phone, dob and gender are required' })
+        
+        await userModel.findByIdAndUpdate(userId,{name,phone,address:JSON.parse(address),dob,gender}) // check if user exists
+
+		if (imageFile) {
+			const imageUpdate = await new Promise((resolve, reject) => {
+				const uploadStream = cloudinary.uploader.upload_stream(
+					{ resource_type: 'image' },
+					(error, result) => {
+						if (error) return reject(error)
+						resolve(result)
+					}
+				)
+				uploadStream.end(imageFile.buffer)
+			})
+			const imageUrl = imageUpdate.secure_url
+
+			await userModel.findByIdAndUpdate(userId, { image: imageUrl })
+		}
+        const updatedUser = await userModel.findById(userId).select('-password')     
+
+        res.status(200).json({ success: true, message: 'Profile updated successfully', user: updatedUser })
+        
     } catch (error) {
-        console.log('Get user info error:', error?.message || error)
-        res.status(500).json({ success: false, message: "Internal Server Error" })
+        console.log('Update profile error:', error?.message || error)
+        res.status(500).json({ success: false, message: 'Internal Server Error' })
     }
 }
 
@@ -149,7 +187,6 @@ const bookAppointment = async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 }
-
 
 // API TO GET USER APPOINTMENTS FOR FRONTEND MY-APPPOINTMENTS PAGE
 const listAppointments = async (req, res) => {
@@ -254,4 +291,4 @@ const verifyRazorpay = async (req, res) => {
 }
 
 
-export  {registerUser, loginUser, getProfile, bookAppointment, listAppointments,cancelAppointment, paymentRazorpay, verifyRazorpay};
+export  {registerUser, loginUser, getProfile,updateProfile, bookAppointment, listAppointments,cancelAppointment, paymentRazorpay, verifyRazorpay};

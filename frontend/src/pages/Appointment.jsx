@@ -6,13 +6,11 @@ import { assets } from '../assets/assets_frontend/assets';
 import RealatedDoctors from '../components/RealatedDoctors';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-//import { backendUrl } from '../utils/config';
-import { useCallback } from 'react';
 
 const Appointment = () => {
 
   const { docId } = useParams();
-  const { doctors, currencySymbol, backendUrl, token, getDoctorsData } = useContext(AppContext);
+  const { doctors, currencySymbol, backendURL, token, getDoctorsData } = useContext(AppContext);
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
   const navigate = useNavigate();
@@ -30,6 +28,8 @@ const Appointment = () => {
 
   const getAvailableSlots = async () => {
     setDocSlots([]);
+
+    const slotsBooked = docInfo?.slots_booked || {};
 
     // getting current date
     let today = new Date();
@@ -67,10 +67,10 @@ const Appointment = () => {
         const slotDate = day + "_" + month + "_" + year;
         const slotTime = formattedTime;
 
-        const isSlotAvailable = docInfo.slots_booked[slotDate] && docInfo.slots_booked[slotDate].includes(slotTime) ? false : true;
+        const isSlotAvailable = slotsBooked[slotDate] && slotsBooked[slotDate].includes(slotTime) ? false : true;
 
-        if(bookAppointment){
-           // add slot to array
+        if (isSlotAvailable) {
+          // add slot to array
           timeSlots.push({
             datetime: new Date(currentDate),
             time: formattedTime,
@@ -118,7 +118,7 @@ const Appointment = () => {
 
       const slotDate = day + "_" + month + "_" + year;
 
-      const { data } = await axios.post(`${backendUrl}/api/user/book-appointment`, { docId,slotDate, slotTime });
+      const { data } = await axios.post(`${backendURL}/api/user/book-appointment`, { docId,slotDate, slotTime },{ headers: { token } });
 
       if (data.success) {
         toast.success(data.message);
@@ -128,7 +128,8 @@ const Appointment = () => {
         toast.error(data.message);
       }
     }catch (error) {
-      toast.error('Failed to book appointment');
+      console.log(error);
+      toast.error(error.message);
     }
   }
 

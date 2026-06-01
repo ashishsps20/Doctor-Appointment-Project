@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 
 const MyAppointments = () => {
 
-  const { backendUrl, token, getDoctorsData } = useContext(AppContext);
+  const { backendURL, token, getDoctorsData } = useContext(AppContext);
 
   const [appointments, setAppointments] = useState([]);
   const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -20,7 +20,10 @@ const MyAppointments = () => {
 
   const getUserAppointments = async () => {
     try {
-      const { data } = await axios.get(backendUrl + 'api/user/appointment', { headers: { token } });
+      // ✅ SAHI TAREEEKA (Backticks aur Slash add kar diya)
+      const { data } = await axios.get(`${backendURL}/api/user/appointment`, { 
+      headers: { token } 
+      });
 
       if (data.success) {
         setAppointments(data.appointments.reverse());
@@ -34,7 +37,7 @@ const MyAppointments = () => {
 
   const cancelAppointment = async (appointmentId) => {
     try {
-      const { data } = await axios.post(backendUrl + 'api/user/cancel-appointment', { appointmentId }, { headers: { token } });
+     const { data } = await axios.post(`${backendURL}/api/user/cancel-appointment`, { appointmentId }, { headers: { token } });
 
       if (data.success) {
         toast.success(data.message);
@@ -64,7 +67,7 @@ const MyAppointments = () => {
       // Step 2: THE MAGIC HANDLER (Yeh tab chalta hai jab user UPI pin daal kar pay kar deta hai)
       handler: async (response) => {
         try {
-          const { data } = await axios.post(backendUrl + 'api/user/verify-razorpay', response, { headers: { token } });
+          const { data } = await axios.post(`${backendURL}/api/user/verify-razorpay`, response, { headers: { token } });
 
           if(data.success) {
             getUserAppointments();
@@ -87,7 +90,7 @@ const MyAppointments = () => {
   const appointmentRazorpay = async (appointmentId) => {
     try {
 
-      const { data } = await axios.post(backendUrl + 'api/user/payment-razorpay', { appointmentId }, { headers: { token } });
+     const { data } = await axios.post(`${backendURL}/api/user/payment-razorpay`, { appointmentId }, { headers: { token } });
 
       if (data.success) {
         initPay(data.order)// open razorpay payment modal
