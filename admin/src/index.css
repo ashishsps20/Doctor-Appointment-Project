@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Sora:wght@400;500;600;700&display=swap");
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@83.6,438&family=Outfit:wght@100..900&family=Poppins:wght@500&display=swap');
+@import "tailwindcss";
 
 ::-webkit-scrollbar {
   @apply hidden
