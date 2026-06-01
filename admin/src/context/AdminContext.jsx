@@ -6,7 +6,8 @@ export const AdminContext = createContext()
 
 const AdminContextProvider = (props) => {
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') || null);
-    const[doctors,setDoctors] = useState([])
+    const [doctors,setDoctors] = useState([])
+    const [appointments, setAppointments] = useState([])
 
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -50,13 +51,30 @@ const AdminContextProvider = (props) => {
         }  
     }
 
+    const getAllAppointments = async () => {
+        try{
+            const {data} = await axios.get(`${backendUrl}/api/admin/appointments`, {headers: {aToken}})
+            if (data.success) {
+                setAppointments(data.appointments)
+                console.log(data.appointments)
+            }else{
+                toast.error(data.message)
+            }
+        } catch(error){
+            toast.error(error?.response?.data?.message || 'Failed to fetch appointments')
+        }
+    }
+
     const value = {
         aToken,
         setAToken,
         backendUrl,
         doctors,
         getAllDoctors,
-        changeAvailability
+        changeAvailability,
+        appointments,
+        getAllAppointments,
+        setAppointments
     }
     return (
         <AdminContext.Provider value={value}>

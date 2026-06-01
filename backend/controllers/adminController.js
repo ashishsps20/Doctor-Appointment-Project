@@ -2,6 +2,7 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js'
+import appointmentModel from '../models/appointmentModel.js'
 import jwt from 'jsonwebtoken'
 
 
@@ -100,5 +101,15 @@ export const allDoctors = async(req,res) => {
     } catch (error) {
         console.error('Get all doctors error:', error?.message || error)
         res.status(500).json({ success: false, message: "Internal Server Error" })
+    }
+}
+
+export const appointmentsAdmin = async(req,res) => {
+    try{
+        const appointments = await appointmentModel.find({})
+        res.json({ success: true, appointments })
+    } catch(error){
+        console.error('Get appointments error:', error?.message || error)
+        res.json({ success: false, message: error?.message || "Internal Server Error" })  
     }
 }
