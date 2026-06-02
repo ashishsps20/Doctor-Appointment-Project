@@ -113,3 +113,36 @@ export const appointmentsAdmin = async(req,res) => {
         res.json({ success: false, message: error?.message || "Internal Server Error" })  
     }
 }
+
+// Api for appoinment cancellation by admin
+export const appointmentCancel = async (req, res) => {
+    try {
+        const { appointmentId } = req.body;
+        const appointmentData = await appointmentModel.findById(appointmentId);
+
+    
+        // if patient already cancelled then return success true with message already cancelled
+        if(appointmentData.cancelled){
+            return res.json({success: true, message: 'Appointment already cancelled'})
+        }
+
+        await appointmentModel.findByIdAndUpdate(appointmentId, {cancelled: true})
+
+        //free the slot in doctor model
+        const {docId,slotDate,slotTime} = appointmentData;
+
+        const doctorData = await doctorModel.findById(docId);
+        let slots_booked = doctorData.slots_booked;
+
+        // Remove the cancelled slot from doctor's booked slots
+        if(slots_booked[slotDate]){
+            slots_booked[slotDate] = slots_booked[slotDate].filter(slot => slot !== slotTime);
+            await doctorModel.findByIdAndUpdate(docId,{slots_booked})
+        }
+
+        res.json({success: true, message: 'Appointment Cancelled'})
+    } catch (error) {
+        console.log(error);      
+        res.json({ success: false, message: error.message });
+    }
+}
