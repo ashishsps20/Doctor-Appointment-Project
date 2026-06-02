@@ -111,14 +111,14 @@ const Appointment = () => {
     try {
 
       const date = docSlots[slotIndex][0].datetime;
-      
+
       let day = date.getDate();
       let month = date.getMonth() + 1;
       let year = date.getFullYear();
 
       const slotDate = day + "_" + month + "_" + year;
 
-      const { data } = await axios.post(`${backendURL}/api/user/book-appointment`, { docId,slotDate, slotTime },{ headers: { token } });
+      const { data } = await axios.post(`${backendURL}/api/user/book-appointment`, { docId, slotDate, slotTime }, { headers: { token } });
 
       if (data.success) {
         toast.success(data.message);
@@ -127,7 +127,7 @@ const Appointment = () => {
       } else {
         toast.error(data.message);
       }
-    }catch (error) {
+    } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
@@ -141,8 +141,11 @@ const Appointment = () => {
           <img className='bg-primary w-full sm:max-w-72 rounded-lg' src={docInfo.image} alt='' />
         </div>
 
-        <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0'>
+        <div className='flex-1 border border-gray-400 rounded-lg p-8 py-3 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0'>
           {/* ------------- Doc Info : name, degree, experience ------------- */}
+          <div className={`flex items-center gap-2 text-md text-center ${docInfo.available ? 'text-green-500' : 'text-gray-500'}`}>
+            <p className={`w-3 h-3 ${docInfo.available ? 'bg-green-500' : 'bg-gray-500'} rounded-full`}></p><p>{docInfo.available ? 'Available' : 'Not Available'}</p>
+          </div>
           <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>
             {docInfo.name}
             <img className='w-5' src={assets.verified_icon} alt='' />

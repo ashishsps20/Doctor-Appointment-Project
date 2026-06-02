@@ -127,10 +127,11 @@ const MyAppointments = () => {
             </div>
             <div></div>
             <div className='flex flex-col gap-2 justify-end'>
-              {!item.cancelled && item.payment && <button disabled className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-not-allowed bg-green-600 text-white'> Paid</button>}
-              {!item.cancelled && !item.payment && <button onClick={() => appointmentRazorpay(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded cursor-pointer hover:bg-primary hover:text-white transition-all duration-300'> Pay Online </button>}
-              {!item.cancelled && <button onClick={() => cancelAppointment(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-pointer  hover:bg-red-600 hover:text-white transition-all duration-300'> Cancel Appointment</button>}
-              {item.cancelled && <button disabled className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-not-allowed bg-red-600 text-white'> Appointment Cancelled </button>}
+              {!item.cancelled && item.payment && !item.isCompleted && <button disabled className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-not-allowed bg-green-600 text-white'> Paid</button>}
+              {!item.cancelled && !item.payment && !item.isCompleted && <button onClick={() => appointmentRazorpay(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded cursor-pointer hover:bg-primary hover:text-white transition-all duration-300'> Pay Online </button>}
+              {!item.cancelled && !item.isCompleted && <button onClick={() => cancelAppointment(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-pointer  hover:bg-red-600 hover:text-white transition-all duration-300'> Cancel Appointment</button>}
+              {item.cancelled && !item.isCompleted && <button disabled className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-not-allowed bg-red-600 text-white'> Appointment Cancelled </button>}
+              {item.isCompleted && <button disabled className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded  cursor-not-allowed bg-green-600 text-white'>Completed </button>}
             </div>
           </div>
         ))}
