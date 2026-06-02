@@ -22,7 +22,7 @@ const Navbar = () => {
             <img className='w-36 sm:w-48 cursor-pointer' src={assets.admin_logo} alt="Logo" />
             <p className='border px-2.5 py-0.5 rounded-full border-gray500 text-gray-600'>{aToken ? 'Welcome, Admin!' : 'Doctor Appointment App'}</p>
         </div>
-        <button className='rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition duration-200 hover:-translate-y-0.5 hover:from-blue-600 hover:to-indigo-700' 
+        <button className='rounded-full bg-linear-to-r from-blue-500 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition duration-200 hover:-translate-y-0.5 hover:from-blue-600 hover:to-indigo-700' 
             onClick={logoutHandler}>
             Logout
         </button>
