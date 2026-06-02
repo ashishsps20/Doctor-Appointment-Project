@@ -1,6 +1,7 @@
 
 import mongoose from 'mongoose'
 import doctorModel from '../models/doctorModel.js'
+import appointmentModel from '../models/appointmentModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -57,7 +58,20 @@ export const loginDoctor = async (req, res) => {
         }
 
     }catch(error){
-        console.error('Get doctors list error:', error?.message || error)
+        console.error('Login error:', error?.message || error)
+        res.json({ success: false, message: error.message })
+    }
+}
+
+// API to get doctor appointments for doctor panel
+export const appointmentsDoctor = async (req, res) => {
+    try {
+        const { docId } = req.body
+        const appointments = await appointmentModel.find({ docId })
+        res.json({ success: true, appointments })
+        
+    } catch (error) {
+        console.error(error?.message || error)
         res.json({ success: false, message: error.message })
     }
 }
