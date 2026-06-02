@@ -10,8 +10,8 @@ const DoctorContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const [dToken, setDToken] = useState(localStorage.getItem('dToken') || null);
-
     const [appointments, setAppointments] = useState([])
+    const [dashData,setDashData] = useState(false)
 
     const getAppointments = async () => {
         try {
@@ -36,6 +36,7 @@ const DoctorContextProvider = (props) => {
             if (data.success) {
                 toast.success(data.message)
                 getAppointments()
+                getDashData()
             } else {
                 toast.error(data.message)
             }
@@ -52,21 +53,45 @@ const DoctorContextProvider = (props) => {
             if (data.success) {
                 toast.success(data.message)
                 getAppointments()
+                getDashData()
             } else {
                 toast.error(data.message)
             }
         } catch (error) {
             console.error(error)
-            toast.error(error.message || 'Failed to complete appointment')
+            toast.error(error.message || 'Failed to cancel appointment')
         }
     }
+
+    const getDashData = async () => {
+
+        try{
+
+            const { data } = await axios.get(`${backendUrl}/api/doctor/dashboard`, { headers: { dToken } })
+            if (data.success) {
+                setDashData(data.dashData)
+                console.log(data.dashData)
+            }else{
+                toast.error(data.message)
+            }
+
+        } catch(error){
+            console.error(error)
+            toast.error(error.message || 'Failed to get dashData')
+        }
+
+    }
+
+
     const value = {
         dToken, setDToken,
         backendUrl,
         appointments, setAppointments,
         getAppointments,
         completeAppointment,
-        cancelAppointment
+        cancelAppointment,
+        dashData,getDashData,
+        setDashData
     }
     return (
         <DoctorContext.Provider value={value}>
