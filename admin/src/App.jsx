@@ -27,8 +27,9 @@ const App = () => {
       <div className='flex items-start gap-6 px-6 py-8'>
         <Sidebar />
         <Routes>
+          <Route path='/' element={aToken ? <Dashboard /> : <DoctorDashboard/>} />
+
           {/* Admin Route */}
-          <Route path='/' element={<Dashboard />} />
           <Route path='/admin-dashboard' element={<Dashboard />} />
           <Route path='/all-appointments' element={<AllAppointments />} />
           <Route path='/doctor-list' element={<DoctorsList />} />
