@@ -1,4 +1,4 @@
-
+import redisClient from '../config/redis.js';
 import mongoose from 'mongoose'
 import doctorModel from '../models/doctorModel.js'
 import appointmentModel from '../models/appointmentModel.js'
@@ -18,7 +18,12 @@ export const changeAvailability = async (req, res) => {
         if (!docData) {
             return res.status(404).json({ success: false, message: 'Doctor not found' })
         }
+        // 1. Update in MongoDB
         await doctorModel.findByIdAndUpdate(docId, { available: !docData.available })
+        // 🌟 2. CACHE INVALIDATION (THE FIX) 🌟
+        // Purani list Redis se delete kar do. Agli baar 'doctorsList' API khud naya data laakar Redis mein daal degi.
+        await redisClient.del('all_doctors');
+        
         res.status(200).json({ success: true, message: "Doctor availability changed successfully" })
     }
     catch (error) {
@@ -30,6 +35,20 @@ export const changeAvailability = async (req, res) => {
 export const doctorsList = async (req, res) => {
     try {
         const doctors = await doctorModel.find().select(['-password', '-email']).sort({ date: -1 })
+        const cachedDoctors = await redisClient.get('all_doctors');
+
+        if (cachedDoctors) {
+            console.log("⚡ Serving from Redis Cache! (Fast)");
+            // Redis hamesha string save karta hai, isliye parse karna padega
+            return res.json({ success: true, doctors: JSON.parse(cachedDoctors) }); 
+        }
+
+        // 🌟 2. Agar Redis khali hai, toh MongoDB (Database) ke paas jao
+        console.log("🐌 Serving from MongoDB Database! (Slow)");
+        // const doctors = await doctorModel.find().select(['-password','-email']).sort({ date: -1 }) 
+
+        // 🌟 3. Agli baar ke liye Redis mein save kar do (Expire in 3600 seconds = 1 Hour)
+        await redisClient.setEx('all_doctors', 3600, JSON.stringify(doctors));
         res.status(200).json({ success: true, doctors })
     } catch (error) {
         console.error('Get doctors list error:', error?.message || error)
