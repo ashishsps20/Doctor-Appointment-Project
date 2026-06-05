@@ -12,8 +12,13 @@ const Navigation = () => {
     const logoutHandler = () => {
         setToken('');
         localStorage.removeItem('token');
+
+        // 🌟 Chat ka kachra hamesha ke liye flush!
+        sessionStorage.removeItem('prescripto_current_chat');
+
         setOpen(false);
-        navigate('/');
+
+        window.location.replace('/'); // Hard reload jisse sab fresh ho jaye
     }
 
     return (
@@ -35,6 +40,10 @@ const Navigation = () => {
                     </NavLink>
                     <NavLink to='/contact'>
                         <li className='py-1'>Contact</li>
+                        <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
+                    </NavLink>
+                    <NavLink to='/symptom-checker'>
+                        <li className='py-1'>Symptom Checker</li>
                         <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
                     </NavLink>
                 </ul>
@@ -75,6 +84,7 @@ const Navigation = () => {
                             <NavLink onClick={() => setShowMenu(false)} to='/doctors'><p className='px-4 py-2 rounded inline-block'>ALL DOCTORS</p></NavLink>
                             <NavLink onClick={() => setShowMenu(false)} to='/about'><p className='px-4 py-2 rounded inline-block'>ABOUT</p></NavLink>
                             <NavLink onClick={() => setShowMenu(false)} to='/contact'><p className='px-4 py-2 rounded inline-block'>CONTACT</p></NavLink>
+                            <NavLink onClick={() => setShowMenu(false)} to='/symptom-checker'><p className='px-4 py-2 rounded inline-block'>SYMPTOM CHECKER</p></NavLink>
                         </ul>
                     </div>
                 </div>
