@@ -50,7 +50,7 @@ const DoctorProfile = () => {
 
       <div className='flex flex-col gap-4 m-5'>
         <div>
-          <img className='bg-blue-500 w-full sm:max-w-64 rounded-lg' src={profileData.image} alt="Profile" />
+          <img className='bg-primary/10 w-full sm:max-w-64 rounded-lg' src={profileData.image} alt="Profile" />
         </div>
         <div className='flex-1 border border-stone-100 rounded-lg p-8 py-7 bg-white'>
           {/* ----- Doc Info : name , degree, experience */}
@@ -87,8 +87,8 @@ const DoctorProfile = () => {
           </div>
           {
             isEdit 
-            ? <button onClick={updateProfile}className='px-4 py-1 border border-blue-500 text-sm rounded-full mt-5 hover:bg-blue-500 hover:text-white'>Save</button>
-            : <button onClick={() => setIsEdit(true)}className='px-4 py-1 border border-blue-500 text-sm rounded-full mt-5 hover:bg-blue-500 hover:text-white'>Edit</button>
+            ? <button onClick={updateProfile}className='px-4 py-1 border border-primary text-sm rounded-full mt-5 hover:bg-primary hover:text-white'>Save</button>
+            : <button onClick={() => setIsEdit(true)}className='px-4 py-1 border border-primary text-sm rounded-full mt-5 hover:bg-primary hover:text-white'>Edit</button>
           }
 
         </div>

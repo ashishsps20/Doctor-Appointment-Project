@@ -3,16 +3,33 @@
 
 @import "tailwindcss";
 
+:root{
+    --app-primary: #14b8a6;
+    --app-secondary: #2563eb;
+    --app-surface: #f8fafc;
+    --app-ink: #0f172a;
+    --app-success: #22c55e;
+    --app-danger: #ef4444;
+    --my-grid-column: repeat(auto-fill, minmax(200px, 1fr));
+}
+
 @theme{
-    --color-primary: #5f6FFF;
+    --color-primary: var(--app-primary);
+    --color-secondary: var(--app-secondary);
+    --color-surface: var(--app-surface);
+    --color-ink: var(--app-ink);
+    --color-success: var(--app-success);
+    --color-danger: var(--app-danger);
     /* --grid-Cols-auto: repeat(auto-fill, minmax(200px, 1fr)); */
 }
 
 *{
     font-family: Outfit;
 }
-:root{
-    --my-grid-column: repeat(auto-fill, minmax(200px, 1fr));
+
+body{
+    color: var(--app-ink);
+    background-color: var(--app-surface);
 }
 
 .active hr{

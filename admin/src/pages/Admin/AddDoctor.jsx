@@ -97,20 +97,20 @@ const AddDoctor = () => {
                     <div className='flex w-full flex-col gap-4 lg:flex-1'>
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Doctor Name</p>
-                            <input value={name} onChange={(e)=> setName(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Name' required />
+                            <input value={name} onChange={(e)=> setName(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="text" placeholder='Name' required />
                         </div>
                         
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Doctor Email</p>
-                            <input value={email} onChange={(e)=> setEmail(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="email" placeholder='Email' required />
+                            <input value={email} onChange={(e)=> setEmail(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="email" placeholder='Email' required />
                         </div>
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Doctor Password</p>
-                            <input value={password} onChange={(e)=> setPassword(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="password" placeholder='Password' required />
+                            <input value={password} onChange={(e)=> setPassword(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="password" placeholder='Password' required />
                         </div>
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Experience</p>
-                            <select value={experience} onChange={(e)=> setExperience(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-blue-400 focus:bg-white' name="" id="">
+                            <select value={experience} onChange={(e)=> setExperience(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-primary focus:bg-white' name="" id="">
                                 <option value="1 Year">1 Year</option>
                                 <option value="2 Years">2 Years</option>
                                 <option value="3 Years">3 Years</option>
@@ -126,13 +126,13 @@ const AddDoctor = () => {
                         </div>
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Fees</p>
-                            <input value={fees} onChange={(e)=> setFees(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Fees' required />
+                            <input value={fees} onChange={(e)=> setFees(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="text" placeholder='Fees' required />
                         </div>
                     </div>
                     <div className='flex w-full flex-col gap-4 lg:flex-1'>
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Speciality</p>
-                            <select value={speciality} onChange={(e)=> setSpeciality(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-blue-400 focus:bg-white' name="" id="">
+                            <select value={speciality} onChange={(e)=> setSpeciality(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition focus:border-primary focus:bg-white' name="" id="">
                                 <option value="General Physician">General Physician</option>
                                 <option value="Cardiologist">Cardiologist</option>
                                 <option value="Dermatologist">Dermatologist</option>
@@ -147,23 +147,23 @@ const AddDoctor = () => {
 
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Education</p>
-                            <input value={degree} onChange={(e)=> setDegree(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Education' required />
+                            <input value={degree} onChange={(e)=> setDegree(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="text" placeholder='Education' required />
                         </div>
 
                         <div className='flex flex-1 flex-col gap-1'>
                             <p className='text-sm font-medium text-slate-600'>Address</p>
-                            <input value={address1} onChange={(e)=> setAddress1(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Address1' required />
-                            <input value={address2} onChange={(e)=> setAddress2(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Address2' required />
+                            <input value={address1} onChange={(e)=> setAddress1(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="text" placeholder='Address1' required />
+                            <input value={address2} onChange={(e)=> setAddress2(e.target.value)} className='rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="text" placeholder='Address2' required />
                         </div>
                     </div>
                     </div>
                     
                     <div>
                         <p className='mt-4 mb-2 text-sm font-medium text-slate-600'>About Doctor</p>
-                        <textarea value={about} onChange={(e)=> setAbout(e.target.value)} className='w-full rounded-lg border border-slate-200 bg-slate-50 px-4 pt-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-blue-400 focus:bg-white' type="text" placeholder='Write about the doctor...' rows={5} />
+                        <textarea value={about} onChange={(e)=> setAbout(e.target.value)} className='w-full rounded-lg border border-slate-200 bg-slate-50 px-4 pt-2 text-sm outline-none transition placeholder:text-slate-300 focus:border-primary focus:bg-white' type="text" placeholder='Write about the doctor...' rows={5} />
                     </div>
 
-                    <button type='submit' className='mt-4 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-10 py-3 text-sm font-semibold text-white shadow-sm transition hover:shadow-md cursor-pointer'>Add Doctor</button>
+                    <button type='submit' className='mt-4 rounded-full bg-gradient-to-r from-primary to-secondary px-10 py-3 text-sm font-semibold text-white shadow-sm transition hover:shadow-md cursor-pointer'>Add Doctor</button>
 
                 </div>
 

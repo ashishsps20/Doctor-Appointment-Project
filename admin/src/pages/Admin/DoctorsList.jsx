@@ -15,11 +15,11 @@ const DoctorsList = () => {
             <div className='mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
                 {
                     doctors.map((doctor, index) => (
-                        <div key={index} className='group w-full cursor-pointer overflow-hidden rounded-xl border border-indigo-200 bg-white transition-all duration-300'>
+                        <div key={index} className='group w-full cursor-pointer overflow-hidden rounded-xl border border-primary/20 bg-white transition-all duration-300'>
                             <img
                                 src={doctor.image}
                                 alt={doctor.name}
-                                className='w-full bg-indigo-50 object-cover transition-all duration-300 group-hover:bg-indigo-100 group-hover:scale-105'
+                                className='w-full bg-primary/10 object-cover transition-all duration-300 group-hover:bg-primary/20 group-hover:scale-105'
                             />
                             <div className='p-4 '>
                                 <p className='text-neutral-800 text-lg font-medium '>{doctor.name}</p>

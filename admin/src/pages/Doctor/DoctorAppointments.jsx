@@ -39,7 +39,7 @@ const DoctorAppointments = () => {
                 <img className='w-8 rounded-full' src={item.userData.image} alt="" /> <p>{item.userData.name}</p>
               </div>
               <div>
-                <p className='text-xs inline border border-blue-500 px-2 rounded-full'>
+                <p className='text-xs inline border border-primary px-2 rounded-full text-primary'>
                   {item.payment ? 'Online' : 'Cash'}
                 </p>
               </div>

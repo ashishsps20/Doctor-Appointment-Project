@@ -128,7 +128,7 @@ const Chatbot = () => {
                                                     <a
                                                         href={props.href}
                                                         onClick={(e) => handleDoctorClick(e, props.href)}
-                                                        className="text-blue-600 underline font-bold cursor-pointer hover:text-blue-800"
+                                                        className="text-secondary underline font-bold cursor-pointer hover:text-secondary/80"
                                                     >
                                                         {props.children}
                                                     </a>
@@ -167,7 +167,7 @@ const Chatbot = () => {
                         <button
                             onClick={sendMessage}
                             disabled={loading}
-                            className="bg-primary hover:bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center transition-transform active:scale-95 disabled:opacity-50 cursor-pointer"
+                            className="bg-primary hover:bg-secondary text-white rounded-full w-10 h-10 flex items-center justify-center transition-transform active:scale-95 disabled:opacity-50 cursor-pointer"
                         >
                             ➤
                         </button>
@@ -179,7 +179,7 @@ const Chatbot = () => {
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="bg-primary hover:bg-blue-600 w-16 h-16 rounded-full shadow-2xl text-white text-3xl flex items-center justify-center hover:scale-105 transition-all duration-300 ml-auto block border-4 border-white cursor-pointer"
+                    className="bg-primary hover:bg-secondary w-16 h-16 rounded-full shadow-2xl text-white text-3xl flex items-center justify-center hover:scale-105 transition-all duration-300 ml-auto border-4 border-white cursor-pointer"
                 >
                     💬
                 </button>

@@ -21,7 +21,7 @@ const App = () => {
 
 
   return  aToken || dToken ? (
-    <div className=' bg-[#F8F9FD]'>
+    <div className=' bg-[var(--app-surface)]'>
       <ToastContainer />
       <Navbar />
       <div className='flex items-start gap-6 px-6 py-8'>

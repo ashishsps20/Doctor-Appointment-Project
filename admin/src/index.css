@@ -2,6 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@83.6,438&family=Outfit:wght@100..900&family=Poppins:wght@500&display=swap');
 @import "tailwindcss";
 
+:root {
+	--app-primary: #14b8a6;
+	--app-secondary: #2563eb;
+	--app-surface: #f8fafc;
+	--app-ink: #0f172a;
+	--app-success: #22c55e;
+	--app-danger: #ef4444;
+}
+
+@theme {
+	--color-primary: var(--app-primary);
+	--color-secondary: var(--app-secondary);
+	--color-surface: var(--app-surface);
+	--color-ink: var(--app-ink);
+	--color-success: var(--app-success);
+	--color-danger: var(--app-danger);
+}
+
 ::-webkit-scrollbar {
   @apply hidden
 }

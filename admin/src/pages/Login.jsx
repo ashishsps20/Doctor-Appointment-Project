@@ -55,21 +55,21 @@ const Login = () => {
     }
 
     return (
-        <div className='min-h-screen bg-[#f6f7fb] px-6 py-12'>
+        <div className='min-h-screen bg-surface px-6 py-12'>
             <div className='mx-auto flex min-h-[70vh] max-w-5xl items-center justify-center'>
                 <form
                     className='w-full max-w-md rounded-2xl border border-slate-100 bg-white p-8 shadow-[0_20px_40px_-25px_rgba(15,23,42,0.35)]'
                     onSubmit={onSubmitHandler}
                 >
                     <h1 className='text-center text-2xl font-semibold text-slate-600'>
-                        <span className='text-indigo-500'>{state}</span> Login
+                        <span className='text-secondary'>{state}</span> Login
                     </h1>
 
                     <div className='mt-8 space-y-6 text-sm text-slate-600'>
                         <label className='block'>
                             Email
                             <input
-                                className='mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100'
+                                className='mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-secondary/40 focus:ring-2 focus:ring-secondary/10'
                                 type='email'
                                 required
                                 placeholder='Enter your email'
@@ -81,7 +81,7 @@ const Login = () => {
                         <label className='block'>
                             Password
                             <input
-                                className='mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100'
+                                className='mt-2 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-slate-700 outline-none transition focus:border-secondary/40 focus:ring-2 focus:ring-secondary/10'
                                 type='password'
                                 required
                                 placeholder='Enter your password'
@@ -92,7 +92,7 @@ const Login = () => {
                     </div>
 
                     <button
-                        className='mt-8 w-full rounded-lg bg-indigo-500 px-4 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-600'
+                        className='mt-8 w-full rounded-lg bg-secondary px-4 py-3 text-sm font-semibold text-white shadow-md shadow-secondary/20 transition hover:bg-secondary/90'
                         type='submit'
                     >
                         Login
@@ -101,7 +101,7 @@ const Login = () => {
                     <p className='mt-5 text-center text-sm text-slate-500'>
                         {state === 'Doctor' ? 'Admin Login?' : 'Doctor Login?'}{' '}
                         <button
-                            className='cursor-pointer font-semibold text-indigo-500 hover:text-indigo-600'
+                            className='cursor-pointer font-semibold text-secondary hover:text-secondary/80'
                             type='button'
                             onClick={toggleRole}
                         >
