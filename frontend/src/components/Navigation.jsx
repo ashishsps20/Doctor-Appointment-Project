@@ -27,23 +27,23 @@ const Navigation = () => {
                 <img onClick={() => navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt='' />
                 <ul className='hidden md:flex items-center gap-5 font-medium'>
                     <NavLink to='/'>
-                        <li className='py-1'>Home</li>
+                        <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>Home</li>
                         <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
                     </NavLink>
                     <NavLink to='/doctors'>
-                        <li className='py-1'>All Doctors</li>
+                        <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>All Doctors</li>
                         <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
                     </NavLink>
                     <NavLink to='/about'>
-                        <li className='py-1'>About</li>
+                        <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>About</li>
                         <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
                     </NavLink>
                     <NavLink to='/contact'>
-                        <li className='py-1'>Contact</li>
+                        <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>Contact</li>
                         <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
                     </NavLink>
                     <NavLink to='/symptom-checker'>
-                        <li className='py-1'>Symptom Checker</li>
+                        <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>Symptom Checker</li>
                         <hr className='border-none outline-none h-0.5 w-3/5 m-auto bg-primary hidden' />
                     </NavLink>
                 </ul>
@@ -51,18 +51,18 @@ const Navigation = () => {
                     {/* Theme Toggle Button */}
                     <button 
                         onClick={toggleTheme}
-                        className='hidden md:inline-flex px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm'
+                        className='hidden md:inline-flex cursor-pointer px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm text-[var(--app-ink)]'
                         title={darkMode ? 'Light Mode' : 'Dark Mode'}
                     >
                         {darkMode ? 'Light Mode' : 'Dark Mode'}
                     </button>
                     {
                         token
-                            ? <div className='flex items-center gap-2 relative' onClick={() => setOpen(prev => !prev)} onMouseLeave={() => setOpen(false)}>
+                            ? <div className='flex items-center gap-2 relative cursor-pointer' onClick={() => setOpen(prev => !prev)} onMouseLeave={() => setOpen(false)}>
 
                                 {/* 🌟 FIX: Bulletproof Image Fallback */}
                                 <img
-                                    className='w-8 h-8 rounded-full object-cover'
+                                    className='w-8 h-8 rounded-full object-cover cursor-pointer'
                                     src={userData?.image ? userData.image : assets.profile_pic}
                                     onError={(e) => { e.currentTarget.src = assets.profile_pic }}
                                     alt='Profile'
@@ -70,23 +70,23 @@ const Navigation = () => {
 
                                 <div className={`absolute top-0 right-0 pt-14 text-sm font-medium z-20 ${open ? 'block' : 'hidden'}`}>
                                     <div className='min-w-48 bg-[var(--app-surface)] rounded-2xl flex flex-col gap-2 p-3 shadow-lg border border-primary/10 text-[var(--app-ink)] overflow-y-hidden max-h-60 hover:overflow-y-auto show-scrollbar text-sm'>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Profile</p>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Appointments</p>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='text-[var(--app-ink)] hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Profile</p>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='text-[var(--app-ink)] hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Appointments</p>
                                         <hr className='my-1 border-primary/15' />
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); toggleTheme(); }}
-                                            className='w-full text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium text-sm'
+                                            className='w-full text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium text-sm text-[var(--app-ink)]'
                                         >
                                             {darkMode ? 'Light Mode' : 'Dark Mode'}
                                         </button>
                                         <hr className='my-1 border-primary/15' />
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>Logout</p>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='text-[var(--app-ink)] hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>Logout</p>
                                     </div>
                                 </div>
                             </div>
                             : <button onClick={() => navigate('/login')} className='bg-primary cursor-pointer text-white px-8 py-3 rounded-full font-light hidden md:block shadow-sm hover:bg-secondary transition-colors'>Create account</button>
                     }
-                    <button onClick={() => setShowMenu(true)} className='md:hidden p-2 text-[var(--app-ink)]'>
+                    <button onClick={() => setShowMenu(true)} className='md:hidden p-2 cursor-pointer text-[var(--app-ink)]'>
                         <svg className='w-6 h-6' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
                             <path d='M4 6h16' />
                             <path d='M4 12h16' />
