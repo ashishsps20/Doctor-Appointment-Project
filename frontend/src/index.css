@@ -70,8 +70,12 @@ body{
 
 ::-webkit-scrollbar{
     width: 8px;
+    height: 8px;
 }
 ::-webkit-scrollbar-track{
+    background: transparent;
+}
+::-webkit-scrollbar-corner {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb{

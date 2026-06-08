@@ -42,7 +42,8 @@ export const handleChat = async (req, res) => {
 
 
         const response = await ai.models.generateContent({
-            model: "gemini-3.5-flash", // Naya model
+            model: "gemini-3.5-flash", // new model
+            // model: "gemini-2.5-flash", // Using 2.5-flash to bypass 3.5-flash high demand
             contents: systemPrompt,
         });
 
@@ -51,7 +52,7 @@ export const handleChat = async (req, res) => {
 
     } catch (error) {
         console.error("Chat Error:", error);
-        res.status(500).json({ success: false, message: "AI Assistant is currently unavailable." });
+        res.status(500).json({ success: false, message: "AI Assistant is currently unavailable. Error: " + error.message });
     }
 };
 

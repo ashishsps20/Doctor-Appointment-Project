@@ -12,6 +12,7 @@ import SymptomChecker from './pages/SymptomChecker'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Chatbot from './components/Chatbot';
 import { AppContext } from './context/AppContext'
 

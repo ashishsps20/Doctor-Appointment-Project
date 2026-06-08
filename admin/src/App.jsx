@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Login from './pages/Login'
 import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { AdminContext } from './context/AdminContext';
 import { DoctorContext } from './context/DoctorContext';
 import { AppContext } from './context/AppContext';

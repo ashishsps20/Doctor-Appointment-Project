@@ -22,8 +22,15 @@ const Appointment = () => {
 
 
   const fetchDocInfo = async () => {
-    const docInfo = doctors.find(doc => formatDocNameForSlug(doc.name) === docSlug);
-    setDocInfo(docInfo);
+    // First try to match by slug
+    let info = doctors.find(doc => formatDocNameForSlug(doc.name) === docSlug);
+    
+    // Fallback: Try to match by ID (for older links or chatbot links)
+    if (!info) {
+      info = doctors.find(doc => doc._id === docSlug);
+    }
+
+    setDocInfo(info);
   }
 
   const getAvailableSlots = async () => {
