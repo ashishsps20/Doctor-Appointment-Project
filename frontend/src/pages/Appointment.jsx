@@ -9,8 +9,8 @@ import axios from 'axios';
 
 const Appointment = () => {
 
-  const { docId } = useParams();
-  const { doctors, currencySymbol, backendURL, token, getDoctorsData } = useContext(AppContext);
+  const { docSlug } = useParams();
+  const { doctors, currencySymbol, backendURL, token, getDoctorsData, formatDocNameForSlug } = useContext(AppContext);
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Appointment = () => {
 
 
   const fetchDocInfo = async () => {
-    const docInfo = doctors.find(doc => doc._id === docId)
+    const docInfo = doctors.find(doc => formatDocNameForSlug(doc.name) === docSlug);
     setDocInfo(docInfo);
   }
 
@@ -42,7 +42,7 @@ const Appointment = () => {
       // setting end time of the date with index
       let endTime = new Date();
       endTime.setDate(today.getDate() + i);
-      endTime.setHours(21, 0, 0, 0);
+      endTime.setHours(20, 0, 0, 0);
 
 
       if (currentDate.getDate() === today.getDate()) {
@@ -57,6 +57,13 @@ const Appointment = () => {
       let timeSlots = [];
 
       while (currentDate <= endTime) {
+
+        // Add a lunch break: Doctor not available from 1:00 PM (13:00) to 5:00 PM (17:00)
+        if (currentDate.getHours() >= 13 && currentDate.getHours() < 17) {
+            currentDate.setHours(17);
+            currentDate.setMinutes(0);
+            continue;
+        }
 
         let formattedTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -91,7 +98,7 @@ const Appointment = () => {
 
   useEffect(() => {
     fetchDocInfo();
-  }, [doctors, docId])
+  }, [doctors, docSlug])
 
   useEffect(() => {
     getAvailableSlots();
@@ -123,7 +130,7 @@ const Appointment = () => {
 
       const slotDate = day + "_" + month + "_" + year;
 
-      const { data } = await axios.post(`${backendURL}/api/user/book-appointment`, { docId, slotDate, slotTime }, { headers: { token } });
+      const { data } = await axios.post(`${backendURL}/api/user/book-appointment`, { docId: docInfo._id, slotDate, slotTime }, { headers: { token } });
 
       if (data.success) {
         toast.success(data.message);
@@ -146,52 +153,55 @@ const Appointment = () => {
           <img className='bg-primary w-full sm:max-w-72 rounded-lg' src={docInfo.image} alt='' />
         </div>
 
-        <div className='flex-1 border border-gray-400 rounded-lg p-8 py-3 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0'>
+        <div className='flex-1 border border-[var(--app-ink)]/10 rounded-2xl p-8 py-7 bg-[var(--app-surface)] shadow-lg mx-2 sm:mx-0 mt-[-80px] sm:mt-0 relative z-10'>
           {/* ------------- Doc Info : name, degree, experience ------------- */}
           <div className={`flex items-center gap-2 text-md text-center ${docInfo.available ? 'text-green-500' : 'text-gray-500'}`}>
             <p className={`w-3 h-3 ${docInfo.available ? 'bg-green-500' : 'bg-gray-500'} rounded-full`}></p><p>{docInfo.available ? 'Available' : 'Not Available'}</p>
           </div>
-          <p className='flex items-center gap-2 text-2xl font-medium text-gray-900'>
+          <p className='flex items-center gap-2 text-3xl font-bold text-[var(--app-ink)] mt-3'>
             {docInfo.name}
             <img className='w-5' src={assets.verified_icon} alt='' />
           </p>
-          <div className='flex items-center gap-2 text-sm mt-1 text-gray-600'>
+          <div className='flex items-center gap-2 text-sm mt-2 text-[var(--app-ink)]/80 font-medium'>
             <p>{docInfo.degree} - {docInfo.speciality}</p>
-            <button className='py-0.5 px-2 border text-xs rounded-full'>{docInfo.experience}</button>
+            <button className='py-0.5 px-3 border border-[var(--app-ink)]/20 text-xs rounded-full'>{docInfo.experience}</button>
           </div>
           {/* ------- Doctor About -------} */}
-          <div>
-            <p className='flex items-center gap-1 text-sm font-medium text-gray-900 mt-3' >About <img src={assets.info_icon} alt='' /></p>
-            <p className='text-sm text-gray-500 max-w-[700px] mt-1'>{docInfo.about}</p>
+          <div className='mt-6'>
+            <p className='flex items-center gap-2 text-sm font-semibold text-[var(--app-ink)]' >About <img className="w-4" src={assets.info_icon} alt='' /></p>
+            <p className='text-sm text-[var(--app-ink)]/70 max-w-[700px] mt-2 leading-relaxed'>{docInfo.about}</p>
           </div>
-          <p className='text-gray-500 font-medium mt-4'>
-            Appointment fee: <span className='text-gray-600'>{currencySymbol}{docInfo.fee}</span></p>
+          <p className='text-[var(--app-ink)]/70 font-medium mt-6'>
+            Appointment fee: <span className='text-[var(--app-ink)] font-bold text-lg'>{currencySymbol}{docInfo.fee}</span></p>
         </div>
 
       </div>
 
       {/* --------- Booking Slots ---------- */}
-      <div className='sm:ml-72 sm:pl-4 mt-4 font-medium text-ink'>
-        <p>Booking slots</p>
-        <div className='flex gap-3 items-center w-full overflow-x-sc mt-4'>
+      <div className='sm:ml-72 sm:pl-4 mt-8 font-medium text-[var(--app-ink)]'>
+        <p className='text-xl font-semibold mb-6'>Booking slots</p>
+        <div className='flex gap-4 items-center w-full overflow-x-auto pb-4 show-scrollbar'>
           {
-            docSlots.length && docSlots.map((item, index) => (
-              <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-16 rounded-full cursor-pointer ${slotIndex == index ? 'bg-primary text-white' : 'border border-gray-300'}`} key={index}>
-                <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-                <p>{item[0] && item[0].datetime.getDate()}</p>
+            docSlots.length && docSlots.map((item, index) => {
+              let slotDate = new Date();
+              slotDate.setDate(slotDate.getDate() + index);
+              return (
+              <div onClick={() => setSlotIndex(index)} className={`text-center py-6 min-w-20 rounded-full cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-1 ${slotIndex === index ? 'bg-primary text-white shadow-primary/30 border-transparent' : 'bg-[var(--app-surface)] border border-[var(--app-ink)]/20 hover:border-primary/50'}`} key={index}>
+                <p className='text-sm font-medium opacity-80'>{daysOfWeek[slotDate.getDay()]}</p>
+                <p className='text-xl font-bold mt-1'>{slotDate.getDate()}</p>
               </div>
-            ))
+            )})
           }
         </div>
 
-        <div className='flex items-center gap-3 w-full overflow-x-scroll mt-4'>
+        <div className='flex items-center gap-3 w-full overflow-x-auto mt-6 pb-4 show-scrollbar'>
           {docSlots.length && docSlots[slotIndex].map((item, index) => (
-            <p onClick={() => setSlotTime(item.time)} className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${item.time === slotTime ? 'bg-primary text-white' : 'text-ink border border-gray-300'}`} key={index}>
+            <p onClick={() => setSlotTime(item.time)} className={`text-sm font-medium flex-shrink-0 px-6 py-2.5 rounded-full cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 ${item.time === slotTime ? 'bg-primary text-white shadow-primary/30 border-transparent' : 'bg-[var(--app-surface)] text-[var(--app-ink)] border border-[var(--app-ink)]/20 hover:border-primary/50'}`} key={index}>
               {item.time.toLowerCase()}
             </p>
           ))}
         </div>
-        <button onClick={bookAppointment} className='bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 cursor-pointer hover:bg-primary/90 transition-all duration-300'>
+        <button onClick={bookAppointment} className='bg-primary text-white text-base font-medium px-14 py-4 rounded-full mt-10 mb-6 cursor-pointer hover:bg-secondary transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-secondary/40 hover:-translate-y-1'>
           Book an appointment
         </button>
 
@@ -199,7 +209,7 @@ const Appointment = () => {
 
 
       {/*--- Listing Related Doctors ---*/}
-      <RealatedDoctors docId={docId} speciality={docInfo.speciality} />
+      <RealatedDoctors docId={docInfo._id} speciality={docInfo.speciality} />
 
     </div>
   )

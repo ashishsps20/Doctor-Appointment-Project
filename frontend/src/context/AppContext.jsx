@@ -21,6 +21,10 @@ export const AppContextProvider = (props)=>{
         localStorage.setItem('theme', newTheme ? 'dark' : 'light');
     };
 
+    const formatDocNameForSlug = (name) => {
+        if (!name) return '';
+        return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    };
 
     const getDoctorsData = async () => {
         try {
@@ -66,7 +70,8 @@ export const AppContextProvider = (props)=>{
         setUserData,
         loadUserProfileData,
         darkMode,
-        toggleTheme
+        toggleTheme,
+        formatDocNameForSlug
     };
 
     useEffect(() => {

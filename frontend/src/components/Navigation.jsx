@@ -22,8 +22,8 @@ const Navigation = () => {
     }
 
     return (
-        <nav>
-            <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-primary/15 bg-[var(--app-surface)] text-[var(--app-ink)] transition-colors duration-300'>
+        <nav className='sticky top-0 z-50 w-full backdrop-blur-md bg-[var(--app-surface)]/80 text-[var(--app-ink)] transition-colors duration-300 shadow-sm border-b border-[var(--app-ink)]/10'>
+            <div className='flex items-center justify-between text-sm py-4 px-6 md:px-10 lg:px-20'>
                 <img onClick={() => navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt='' />
                 <ul className='hidden md:flex items-center gap-5 font-medium'>
                     <NavLink to='/'>
@@ -52,7 +52,7 @@ const Navigation = () => {
                     <button 
                         onClick={toggleTheme}
                         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-                        className='hidden md:flex items-center gap-2 cursor-pointer px-5 py-2.5 rounded-full bg-[var(--app-surface)] border border-[var(--app-ink)]/10 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 font-medium text-sm text-[var(--app-ink)] group'
+                        className='hidden md:flex items-center gap-2 cursor-pointer px-4 py-2 rounded-full bg-[var(--app-surface)]/50 backdrop-blur-sm border border-[var(--app-ink)]/10 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 font-medium text-sm text-[var(--app-ink)] group'
                     >
                         {darkMode ? (
                             <>
