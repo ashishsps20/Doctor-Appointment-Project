@@ -28,18 +28,18 @@ const About = () => {
         <p> WHY <span className='text-[var(--app-ink)] font-semibold'> CHOOSE US </span></p>
       </div>
 
-      <div className='flex flex-col md:flex-row mb-20'>
-        <div className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-[var(--app-ink)] opacity-80 cursor-pointer'>
-            <b>Efficiency:</b>
-            <p>Streamlined appointment scheduling that fits into your busy lifestyle.</p>
+      <div className='flex flex-col md:flex-row gap-6 mb-20'>
+        <div className='flex-1 border border-[var(--app-ink)]/10 rounded-2xl px-8 md:px-12 py-10 flex flex-col gap-5 text-[15px] hover:bg-primary/5 hover:border-primary/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-500 text-[var(--app-ink)] cursor-pointer bg-[var(--app-surface)] shadow-sm'>
+            <b className='text-lg'>Efficiency:</b>
+            <p className='opacity-80 leading-relaxed'>Streamlined appointment scheduling that fits seamlessly into your busy lifestyle.</p>
         </div>
-        <div  className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-[var(--app-ink)] opacity-80 cursor-pointer'>
-            <b>Convenience:</b>
-            <p>Access to a network of trusted healthcare professionals in your area.</p>
+        <div  className='flex-1 border border-[var(--app-ink)]/10 rounded-2xl px-8 md:px-12 py-10 flex flex-col gap-5 text-[15px] hover:bg-primary/5 hover:border-primary/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-500 text-[var(--app-ink)] cursor-pointer bg-[var(--app-surface)] shadow-sm'>
+            <b className='text-lg'>Convenience:</b>
+            <p className='opacity-80 leading-relaxed'>Gain instant access to a trusted network of elite healthcare professionals in your area.</p>
         </div>
-        <div  className='border px-10 md:px-16 py-8 sm:py-16 flex flex-col gap-5 text-[15px] hover:bg-primary hover:text-white transition-all duration-300 text-[var(--app-ink)] opacity-80 cursor-pointer'>
-            <b>Personalization:</b>
-            <p>Tailored recommendations and reminders to help you stay on top of your health.</p>
+        <div  className='flex-1 border border-[var(--app-ink)]/10 rounded-2xl px-8 md:px-12 py-10 flex flex-col gap-5 text-[15px] hover:bg-primary/5 hover:border-primary/30 hover:shadow-xl hover:-translate-y-2 transition-all duration-500 text-[var(--app-ink)] cursor-pointer bg-[var(--app-surface)] shadow-sm'>
+            <b className='text-lg'>Personalization:</b>
+            <p className='opacity-80 leading-relaxed'>Receive tailored recommendations and timely reminders to stay on top of your well-being.</p>
         </div>
       </div>
 
