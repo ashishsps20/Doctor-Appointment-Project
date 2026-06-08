@@ -51,8 +51,8 @@ const Navigation = () => {
                     {/* Theme Toggle Button */}
                     <button 
                         onClick={toggleTheme}
+                        aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
                         className='hidden md:inline-flex cursor-pointer px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm text-[var(--app-ink)]'
-                        title={darkMode ? 'Light Mode' : 'Dark Mode'}
                     >
                         {darkMode ? 'Light Mode' : 'Dark Mode'}
                     </button>
