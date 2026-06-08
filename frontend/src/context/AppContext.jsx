@@ -13,6 +13,13 @@ export const AppContextProvider = (props)=>{
     // ✅ Naya Code (Yeh humesha pehle local storage check karega)
     const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
     const[userData,setUserData] = useState(false);
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
+
+    const toggleTheme = () => {
+        const newTheme = !darkMode;
+        setDarkMode(newTheme);
+        localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+    };
 
 
     const getDoctorsData = async () => {
@@ -57,7 +64,9 @@ export const AppContextProvider = (props)=>{
         backendURL,
         userData,
         setUserData,
-        loadUserProfileData
+        loadUserProfileData,
+        darkMode,
+        toggleTheme
     };
 
     useEffect(() => {

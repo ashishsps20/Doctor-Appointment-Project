@@ -5,7 +5,7 @@ import { AppContext } from '../context/AppContext';
 const Navigation = () => {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
-    const { token, setToken, userData } = useContext(AppContext);
+    const { token, setToken, userData, darkMode, toggleTheme } = useContext(AppContext);
 
     const [open, setOpen] = useState(false);
 
@@ -23,7 +23,7 @@ const Navigation = () => {
 
     return (
         <nav>
-            <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-primary/15'>
+            <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-primary/15 bg-[var(--app-surface)] text-[var(--app-ink)] transition-colors duration-300'>
                 <img onClick={() => navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt='' />
                 <ul className='hidden md:flex items-center gap-5 font-medium'>
                     <NavLink to='/'>
@@ -48,6 +48,14 @@ const Navigation = () => {
                     </NavLink>
                 </ul>
                 <div className='flex items-center gap-4 '>
+                    {/* Theme Toggle Button */}
+                    <button 
+                        onClick={toggleTheme}
+                        className='px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm'
+                        title={darkMode ? 'Light Mode' : 'Dark Mode'}
+                    >
+                        {darkMode ? '☀️ Light' : '🌙 Dark'}
+                    </button>
                     {
                         token
                             ? <div className='flex items-center gap-2 cursor-pointer group relative' onClick={() => setOpen(prev => !prev)}>
@@ -62,11 +70,19 @@ const Navigation = () => {
 
                                 <img className='w-2.5' src={assets.dropdown_icon} alt='Dropdown Arrow' />
 
-                                <div className={`absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20  ${open ? 'block' : 'hidden'} sm:group-hover:block`}>
-                                    <div className='min-w-48 bg-white rounded-2xl flex flex-col gap-3 p-4 shadow-lg border border-primary/10'>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='hover:text-primary cursor-pointer'>My Profile</p>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='hover:text-primary cursor-pointer'>My Appointments</p>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='hover:text-primary cursor-pointer'>Logout</p>
+                                <div className={`absolute top-0 right-0 pt-14 text-base font-medium z-20  ${open ? 'block' : 'hidden'} sm:group-hover:block`}>
+                                    <div className='min-w-48 bg-[var(--app-surface)] rounded-2xl flex flex-col gap-3 p-4 shadow-lg border border-primary/10 text-[var(--app-ink)]'>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors'>My Profile</p>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors'>My Appointments</p>
+                                        <hr className='my-1 border-primary/15' />
+                                        <button 
+                                            onClick={(e) => { e.stopPropagation(); toggleTheme(); }}
+                                            className='w-full text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium'
+                                        >
+                                            {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+                                        </button>
+                                        <hr className='my-1 border-primary/15' />
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors'>Logout</p>
                                     </div>
                                 </div>
                             </div>
@@ -74,10 +90,18 @@ const Navigation = () => {
                     }
                     <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt='' />
                     {/*----- Mobile menu -----*/}
-                    <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 overflow-hidden bg-white z-20 transition-all duration-150`}>
+                    <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 overflow-hidden bg-[var(--app-surface)] z-20 transition-all duration-150`}>
                         <div className='flex items-center justify-between px-5 py-6'>
                             <img className='w-36' src={assets.logo} alt='' />
-                            <img src={assets.cross_icon} className='w-7' onClick={() => setShowMenu(false)} alt='' />
+                            <div className='flex items-center gap-3'>
+                                <button 
+                                    onClick={toggleTheme}
+                                    className='px-3 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-xs'
+                                >
+                                    {darkMode ? '☀️ Light' : '🌙 Dark'}
+                                </button>
+                                <img src={assets.cross_icon} className='w-7' onClick={() => setShowMenu(false)} alt='' />
+                            </div>
                         </div>
                         <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>
                             <NavLink onClick={() => setShowMenu(false)} to='/'><p className='px-4 py-2 rounded-full inline-block hover:bg-primary/10 hover:text-primary'>HOME</p></NavLink>

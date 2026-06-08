@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Doctor from './pages/Doctor'
@@ -13,10 +13,21 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import { ToastContainer } from 'react-toastify';
 import Chatbot from './components/Chatbot';
+import { AppContext } from './context/AppContext'
 
 const App = () => {
+  const { darkMode } = useContext(AppContext)
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark')
+    } else {
+      document.documentElement.removeAttribute('data-theme')
+    }
+  }, [darkMode])
+
   return (
-    <div className='mx-4 sm:mx-[10%] min-h-screen bg-[var(--app-surface)]'>
+    <div className='mx-4 sm:mx-[10%] min-h-screen bg-[var(--app-surface)] text-[var(--app-ink)] transition-colors duration-300'>
       <ToastContainer pauseOnHover={false} />
       <Navigation/>
       <Routes>

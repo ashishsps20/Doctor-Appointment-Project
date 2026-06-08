@@ -13,6 +13,15 @@
     --my-grid-column: repeat(auto-fill, minmax(200px, 1fr));
 }
 
+[data-theme="dark"]{
+    --app-primary: #14b8a6;
+    --app-secondary: #1e40af;
+    --app-surface: #1e293b;
+    --app-ink: #f1f5f9;
+    --app-success: #16a34a;
+    --app-danger: #dc2626;
+}
+
 @theme{
     --color-primary: var(--app-primary);
     --color-secondary: var(--app-secondary);
@@ -30,6 +39,7 @@
 body{
     color: var(--app-ink);
     background-color: var(--app-surface);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .active hr{

@@ -8,14 +8,14 @@ const Footer = () => {
                 {/* ----left section---- */}
                 <div>
                     <img className='mb-5 w-40' src={assets.logo} alt='' />
-                    <p className='w-full md:w-2/3 text-gray-600 leading-6'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia sunt ducimus obcaecati. Dignissimos ducimus magnam nostrum eveniet eos obcaecati officia voluptate. Explicabo neque maiores earum. Animi nobis excepturi incidunt a voluptas dignissimos quibusdam commodi, cumque aliquid quis, similique accusantium, dolore ea maxime! Eveniet, rem quas?</p>
+                    <p className='w-full md:w-2/3 text-[var(--app-ink)] opacity-75 leading-6'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia sunt ducimus obcaecati. Dignissimos ducimus magnam nostrum eveniet eos obcaecati officia voluptate. Explicabo neque maiores earum. Animi nobis excepturi incidunt a voluptas dignissimos quibusdam commodi, cumque aliquid quis, similique accusantium, dolore ea maxime! Eveniet, rem quas?</p>
                 </div>
 
                 {/* ----middle section---- */}
 
                 <div>
                     <p className='text-xl font-medium mb-5'>COMPANY</p>
-                    <ul className='flex flex-col gap-2 text-gray-600'>
+                    <ul className='flex flex-col gap-2 text-[var(--app-ink)] opacity-75'>
                         <li>Home</li>
                         <li>About us</li>
                         <li>Contact us</li>
@@ -27,7 +27,7 @@ const Footer = () => {
 
                 <div>
                     <p className='text-xl font-medium mb-5'>GET IN TOUCH</p>
-                    <ul className='flex flex-col gap-2 text-gray-600'>
+                    <ul className='flex flex-col gap-2 text-[var(--app-ink)] opacity-75'>
                         <li>+1-212-456-7890</li>
                         <li>anyemailid@email.com</li>
                     </ul>
@@ -37,7 +37,7 @@ const Footer = () => {
             {/* ---- Copyright text------- */}
             <div>
                 <hr className='border-primary/10'/>
-                <p className='py-5 text-sm text-center text-gray-500'>Copyright 2025@ Precripto - All Right Reserved</p>
+                <p className='py-5 text-sm text-center text-[var(--app-ink)] opacity-60'>Copyright 2025@ Precripto - All Right Reserved</p>
             </div>
         </div>
     )
