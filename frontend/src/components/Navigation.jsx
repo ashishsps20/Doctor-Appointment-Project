@@ -24,7 +24,7 @@ const Navigation = () => {
     return (
         <nav className='sticky top-0 z-50 w-full backdrop-blur-md bg-[var(--app-surface)]/80 text-[var(--app-ink)] transition-colors duration-300 shadow-sm border-b border-[var(--app-ink)]/10'>
             <div className='flex items-center justify-between text-sm py-4 px-6 md:px-10 lg:px-20'>
-                <img onClick={() => navigate('/')} className='w-44 cursor-pointer' src={assets.logo} alt='' />
+                <img onClick={() => navigate('/')} className='w-44 cursor-pointer logo-img' src={assets.logo} alt='' />
                 <ul className='hidden md:flex items-center gap-5 font-medium'>
                     <NavLink to='/'>
                         <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>Home</li>
@@ -116,7 +116,7 @@ const Navigation = () => {
                     {/*----- Mobile menu -----*/}
                     <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 overflow-hidden bg-[var(--app-surface)] z-20 transition-all duration-150`}>
                         <div className='flex items-center justify-between px-5 py-6'>
-                            <img className='w-36' src={assets.logo} alt='' />
+                            <img className='w-36 logo-img' src={assets.logo} alt='' />
                             <div className='flex items-center gap-3'>
                                 <button onClick={() => setShowMenu(false)} className='p-2 cursor-pointer text-[var(--app-ink)] hover:bg-primary/10 rounded-full transition-colors'>
                                     <svg className='w-7 h-7' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
