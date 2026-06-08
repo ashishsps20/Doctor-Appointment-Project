@@ -50,6 +50,29 @@ body{
     @apply hidden
 }
 
+.show-scrollbar::-webkit-scrollbar{
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.show-scrollbar:hover::-webkit-scrollbar{
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.show-scrollbar:hover::-webkit-scrollbar-track{
+    background: rgba(148, 163, 184, 0.12);
+}
+
+.show-scrollbar:hover::-webkit-scrollbar-thumb{
+    background: rgba(20, 184, 166, 0.45);
+    border-radius: 9999px;
+}
+
+.show-scrollbar:hover{
+    scrollbar-width: thin;
+    scrollbar-color: rgba(20, 184, 166, 0.45) transparent;
+}
 
 @media (max-width: 740px){
     .active p{

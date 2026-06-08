@@ -51,14 +51,14 @@ const Navigation = () => {
                     {/* Theme Toggle Button */}
                     <button 
                         onClick={toggleTheme}
-                        className='px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm'
+                        className='hidden md:inline-flex px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm'
                         title={darkMode ? 'Light Mode' : 'Dark Mode'}
                     >
-                        {darkMode ? '☀️ Light' : '🌙 Dark'}
+                        {darkMode ? 'Light Mode' : 'Dark Mode'}
                     </button>
                     {
                         token
-                            ? <div className='flex items-center gap-2 cursor-pointer group relative' onClick={() => setOpen(prev => !prev)}>
+                            ? <div className='flex items-center gap-2 relative' onClick={() => setOpen(prev => !prev)} onMouseLeave={() => setOpen(false)}>
 
                                 {/* 🌟 FIX: Bulletproof Image Fallback */}
                                 <img
@@ -68,38 +68,36 @@ const Navigation = () => {
                                     alt='Profile'
                                 />
 
-                                <img className='w-2.5' src={assets.dropdown_icon} alt='Dropdown Arrow' />
-
-                                <div className={`absolute top-0 right-0 pt-14 text-base font-medium z-20  ${open ? 'block' : 'hidden'} sm:group-hover:block`}>
-                                    <div className='min-w-48 bg-[var(--app-surface)] rounded-2xl flex flex-col gap-3 p-4 shadow-lg border border-primary/10 text-[var(--app-ink)]'>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors'>My Profile</p>
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors'>My Appointments</p>
+                                <div className={`absolute top-0 right-0 pt-14 text-sm font-medium z-20 ${open ? 'block' : 'hidden'}`}>
+                                    <div className='min-w-48 bg-[var(--app-surface)] rounded-2xl flex flex-col gap-2 p-3 shadow-lg border border-primary/10 text-[var(--app-ink)] overflow-y-hidden max-h-60 hover:overflow-y-auto show-scrollbar text-sm'>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Profile</p>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Appointments</p>
                                         <hr className='my-1 border-primary/15' />
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); toggleTheme(); }}
-                                            className='w-full text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium'
+                                            className='w-full text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium text-sm'
                                         >
-                                            {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+                                            {darkMode ? 'Light Mode' : 'Dark Mode'}
                                         </button>
                                         <hr className='my-1 border-primary/15' />
-                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors'>Logout</p>
+                                        <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>Logout</p>
                                     </div>
                                 </div>
                             </div>
                             : <button onClick={() => navigate('/login')} className='bg-primary cursor-pointer text-white px-8 py-3 rounded-full font-light hidden md:block shadow-sm hover:bg-secondary transition-colors'>Create account</button>
                     }
-                    <img onClick={() => setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt='' />
+                    <button onClick={() => setShowMenu(true)} className='md:hidden p-2 text-[var(--app-ink)]'>
+                        <svg className='w-6 h-6' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                            <path d='M4 6h16' />
+                            <path d='M4 12h16' />
+                            <path d='M4 18h16' />
+                        </svg>
+                    </button>
                     {/*----- Mobile menu -----*/}
                     <div className={`${showMenu ? 'fixed w-full' : 'h-0 w-0'} md:hidden right-0 top-0 bottom-0 overflow-hidden bg-[var(--app-surface)] z-20 transition-all duration-150`}>
                         <div className='flex items-center justify-between px-5 py-6'>
                             <img className='w-36' src={assets.logo} alt='' />
                             <div className='flex items-center gap-3'>
-                                <button 
-                                    onClick={toggleTheme}
-                                    className='px-3 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-xs'
-                                >
-                                    {darkMode ? '☀️ Light' : '🌙 Dark'}
-                                </button>
                                 <img src={assets.cross_icon} className='w-7' onClick={() => setShowMenu(false)} alt='' />
                             </div>
                         </div>
