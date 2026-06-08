@@ -34,7 +34,12 @@ const RealatedDoctors = ({speciality,docId}) => {
                 </div>    
             ))}
         </div>
-        <button onClick={()=>{navigate('/doctors'); scrollTo(0,0);}} className='bg-secondary/10 text-secondary px-12 py-3 rounded-full mt-10 cursor-pointer'>more</button>
+        <button onClick={()=>{navigate('/doctors'); scrollTo(0,0);}} className='group flex items-center gap-2 px-10 py-3 mt-10 bg-transparent text-[var(--app-ink)] font-medium rounded-full border border-[var(--app-ink)]/20 hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer'>
+            Explore More
+            <svg className='w-4 h-4 transition-transform duration-300 group-hover:translate-x-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                <path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M9 5l7 7-7 7'></path>
+            </svg>
+        </button>
     </div> 
   )
 }

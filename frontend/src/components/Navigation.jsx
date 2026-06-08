@@ -52,9 +52,19 @@ const Navigation = () => {
                     <button 
                         onClick={toggleTheme}
                         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-                        className='hidden md:inline-flex cursor-pointer px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium text-sm text-[var(--app-ink)]'
+                        className='hidden md:flex items-center gap-2 cursor-pointer px-5 py-2.5 rounded-full bg-[var(--app-surface)] border border-[var(--app-ink)]/10 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 font-medium text-sm text-[var(--app-ink)] group'
                     >
-                        {darkMode ? 'Light Mode' : 'Dark Mode'}
+                        {darkMode ? (
+                            <>
+                                <svg className="w-4 h-4 text-yellow-400 group-hover:rotate-90 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 3.22a1 1 0 011.415 0l.708.707a1 1 0 01-1.414 1.415l-.708-.707a1 1 0 010-1.415zM16 10a1 1 0 011 1h1a1 1 0 110 2h-1a1 1 0 01-1-1v-1zm-3.22 4.22a1 1 0 010 1.415l-.707.708a1 1 0 01-1.415-1.414l.707-.708a1 1 0 011.415 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-3.22a1 1 0 01-1.415 0l-.708-.707a1 1 0 011.414-1.415l.708.707a1 1 0 010 1.415zM4 10a1 1 0 01-1-1H2a1 1 0 110-2h1a1 1 0 011 1v1zm3.22-4.22a1 1 0 010-1.415l.707-.708a1 1 0 011.415 1.414l-.707.708a1 1 0 01-1.415 0zM10 6a4 4 0 100 8 4 4 0 000-8z" clipRule="evenodd"></path></svg>
+                                <span>Light Mode</span>
+                            </>
+                        ) : (
+                            <>
+                                <svg className="w-4 h-4 text-blue-500 group-hover:-rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                                <span>Dark Mode</span>
+                            </>
+                        )}
                     </button>
                     {
                         token
@@ -75,9 +85,19 @@ const Navigation = () => {
                                         <hr className='my-1 border-primary/15' />
                                         <button 
                                             onClick={(e) => { e.stopPropagation(); toggleTheme(); }}
-                                            className='w-full text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium text-sm text-[var(--app-ink)]'
+                                            className='w-full flex items-center gap-2 text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium text-sm text-[var(--app-ink)] group'
                                         >
-                                            {darkMode ? 'Light Mode' : 'Dark Mode'}
+                                            {darkMode ? (
+                                                <>
+                                                    <svg className="w-4 h-4 text-yellow-400 group-hover:rotate-90 transition-transform duration-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4.22 3.22a1 1 0 011.415 0l.708.707a1 1 0 01-1.414 1.415l-.708-.707a1 1 0 010-1.415zM16 10a1 1 0 011 1h1a1 1 0 110 2h-1a1 1 0 01-1-1v-1zm-3.22 4.22a1 1 0 010 1.415l-.707.708a1 1 0 01-1.415-1.414l.707-.708a1 1 0 011.415 0zM10 16a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm-4.22-3.22a1 1 0 01-1.415 0l-.708-.707a1 1 0 011.414-1.415l.708.707a1 1 0 010 1.415zM4 10a1 1 0 01-1-1H2a1 1 0 110-2h1a1 1 0 011 1v1zm3.22-4.22a1 1 0 010-1.415l.707-.708a1 1 0 011.415 1.414l-.707.708a1 1 0 01-1.415 0zM10 6a4 4 0 100 8 4 4 0 000-8z" clipRule="evenodd"></path></svg>
+                                                    <span>Light Mode</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <svg className="w-4 h-4 text-blue-500 group-hover:-rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                                                    <span>Dark Mode</span>
+                                                </>
+                                            )}
                                         </button>
                                         <hr className='my-1 border-primary/15' />
                                         <p onClick={(e) => { e.stopPropagation(); setOpen(false); logoutHandler() }} className='text-[var(--app-ink)] hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>Logout</p>
@@ -98,7 +118,12 @@ const Navigation = () => {
                         <div className='flex items-center justify-between px-5 py-6'>
                             <img className='w-36' src={assets.logo} alt='' />
                             <div className='flex items-center gap-3'>
-                                <img src={assets.cross_icon} className='w-7' onClick={() => setShowMenu(false)} alt='' />
+                                <button onClick={() => setShowMenu(false)} className='p-2 cursor-pointer text-[var(--app-ink)] hover:bg-primary/10 rounded-full transition-colors'>
+                                    <svg className='w-7 h-7' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                                        <line x1='18' y1='6' x2='6' y2='18' />
+                                        <line x1='6' y1='6' x2='18' y2='18' />
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                         <ul className='flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium'>

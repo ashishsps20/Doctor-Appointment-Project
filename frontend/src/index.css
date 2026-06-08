@@ -79,3 +79,18 @@ body{
         @apply text-white bg-primary;
     }
 }
+
+/* Global button interactivity */
+button:not(:disabled) {
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), filter 0.2s ease-in-out, opacity 0.2s ease-in-out !important;
+    will-change: transform, opacity;
+}
+
+button:not(:disabled):active {
+    transform: scale(0.94) !important;
+    opacity: 0.85 !important;
+}
+
+button:not(:disabled):hover {
+    filter: brightness(1.1);
+}
