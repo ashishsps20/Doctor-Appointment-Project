@@ -52,32 +52,32 @@ const DoctorProfile = () => {
         <div>
           <img className='bg-primary/10 w-full sm:max-w-64 rounded-lg' src={profileData.image} alt="Profile" />
         </div>
-        <div className='flex-1 border border-stone-100 rounded-lg p-8 py-7 bg-white'>
+        <div className='flex-1 border border-[var(--app-ink)]/10 rounded-lg p-8 py-7 bg-[var(--app-surface)] shadow-sm text-[var(--app-ink)]'>
           {/* ----- Doc Info : name , degree, experience */}
-          <p className='flex items-center gap-2 text-3xl font-medium text-gray-700'>{profileData.name}</p>
-          <div className='flex items-center gap-2 mt-1 text-gray-600'>
+          <p className='flex items-center gap-2 text-3xl font-medium opacity-90'>{profileData.name}</p>
+          <div className='flex items-center gap-2 mt-1 opacity-80'>
             <p>{profileData.degree} - {profileData.speciality}</p>
-            <button className='py-0.5 px-2 border text-xs rounded-full'>{profileData.experience}</button>
+            <button className='py-0.5 px-2 border border-[var(--app-ink)]/20 text-xs rounded-full'>{profileData.experience}</button>
           </div>
 
           {/*---- Doc ABOUT----- */}
           <div>
-            <p className='flex items-center gap-1 text-sm font-medium text-neutral-800 mt-3'>About:</p>
-            <p className='text-sm text-gray-600 max-w-175 mt-1'>
+            <p className='flex items-center gap-1 text-sm font-medium mt-3 opacity-90'>About:</p>
+            <p className='text-sm opacity-80 max-w-175 mt-1'>
               {profileData.about}
             </p>
           </div>
 
-          <p className='text-gray-600 font-medium mt-4'>
-            Appointment fee: <span className='text-gray-800'>{currency}{isEdit ? <input type="number" value={profileData.fee} onChange={(e) => setProfileData(prev => ({...prev, fee: e.target.value}))} /> : profileData.fee}</span>
+          <p className='opacity-80 font-medium mt-4'>
+            Appointment fee: <span className='opacity-100 font-semibold'>{currency}{isEdit ? <input type="number" className="bg-transparent outline-none border-b border-[var(--app-ink)]/20 text-[var(--app-ink)]" value={profileData.fee} onChange={(e) => setProfileData(prev => ({...prev, fee: e.target.value}))} /> : profileData.fee}</span>
           </p>
 
-          <div className='flex gap-2 py-2'>
+          <div className='flex gap-2 py-2 opacity-80'>
             <p>Address:</p>
             <p className='text-sm'>
-              {isEdit ? <input type="text" onChange={(e)=>setProfileData(prev => ({...prev,address:{...prev.address,line1:e.target.value}}))} value={profileData.address.line1}/> : profileData.address.line1}
+              {isEdit ? <input type="text" className="bg-transparent outline-none border-b border-[var(--app-ink)]/20 w-full mb-1 text-[var(--app-ink)]" onChange={(e)=>setProfileData(prev => ({...prev,address:{...prev.address,line1:e.target.value}}))} value={profileData.address.line1}/> : profileData.address.line1}
               <br/>
-              {isEdit ? <input type="text" onChange={(e)=>setProfileData(prev => ({...prev,address:{...prev.address,line2:e.target.value}}))} value={profileData.address.line2}/> : profileData.address.line2}
+              {isEdit ? <input type="text" className="bg-transparent outline-none border-b border-[var(--app-ink)]/20 w-full text-[var(--app-ink)]" onChange={(e)=>setProfileData(prev => ({...prev,address:{...prev.address,line2:e.target.value}}))} value={profileData.address.line2}/> : profileData.address.line2}
               </p>
           </div>
 

@@ -1,7 +1,9 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Login from './pages/Login'
 import { ToastContainer } from 'react-toastify'
 import { AdminContext } from './context/AdminContext';
+import { DoctorContext } from './context/DoctorContext';
+import { AppContext } from './context/AppContext';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import { Route, Routes } from 'react-router-dom';
@@ -9,7 +11,6 @@ import Dashboard from './pages/Admin/Dashboard';
 import AllAppointments from './pages/Admin/AllApointments';
 import DoctorsList from './pages/Admin/DoctorsList';
 import AddDoctor from './pages/Admin/AddDoctor';
-import { DoctorContext } from './context/DoctorContext';
 import DoctorDashboard from './pages/Doctor/DoctorDashboard';
 import DoctorAppointments from './pages/Doctor/DoctorAppointments';
 import DoctorProfile from './pages/Doctor/DoctorProfile';
@@ -18,11 +19,19 @@ const App = () => {
 
   const { aToken } = useContext(AdminContext);
   const { dToken } = useContext(DoctorContext);
+  const { darkMode } = useContext(AppContext);
 
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark')
+    } else {
+      document.documentElement.removeAttribute('data-theme')
+    }
+  }, [darkMode])
 
   return  aToken || dToken ? (
-    <div className=' bg-[var(--app-surface)]'>
-      <ToastContainer />
+    <div className='min-h-screen bg-[var(--app-surface)] text-[var(--app-ink)] transition-colors duration-300'>
+      <ToastContainer pauseOnHover={false} />
       <Navbar />
       <div className='flex items-start gap-6 px-6 py-8'>
         <Sidebar />

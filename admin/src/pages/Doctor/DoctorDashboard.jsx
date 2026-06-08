@@ -20,42 +20,42 @@ const DoctorDashboard = () => {
   return dashData && (
     <div className='m-5'>
       <div className='flex flex-wrap gap-3'>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded-xl border border-primary/10 shadow-sm cursor-pointer hover:scale-105 transition-all'>
+        <div className='flex items-center gap-2 bg-[var(--app-surface)] p-4 min-w-52 rounded-xl border border-[var(--app-ink)]/10 shadow-sm cursor-pointer hover:scale-105 transition-all'>
           <img className='w-14' src={assets.earning_icon} alt='' />
           <div>
             <p className='text-xl font-semibold text-secondary'>{currency}{dashData.earnings}</p>
-            <p className='text-gray-400'>Earnings</p>
+            <p className='text-[var(--app-ink)]/70'>Earnings</p>
           </div>
         </div>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded-xl border border-primary/10 shadow-sm cursor-pointer hover:scale-105 transition-all'>
-          <img className='w-14' src={assets.appointment_icon} alt='' />
+        <div className='flex items-center gap-2 bg-[var(--app-surface)] p-4 min-w-52 rounded-xl border border-[var(--app-ink)]/10 shadow-sm cursor-pointer hover:scale-105 transition-all'>
+          <img className='w-14 dark-invert' src={assets.appointment_icon} alt='' />
           <div>
             <p className='text-xl font-semibold text-secondary'>{dashData.appointments}</p>
-            <p className='text-gray-400'>Appointments</p>
+            <p className='text-[var(--app-ink)]/70'>Appointments</p>
           </div>
         </div>
-        <div className='flex items-center gap-2 bg-white p-4 min-w-52 rounded-xl border border-primary/10 shadow-sm cursor-pointer hover:scale-105 transition-all'>
+        <div className='flex items-center gap-2 bg-[var(--app-surface)] p-4 min-w-52 rounded-xl border border-[var(--app-ink)]/10 shadow-sm cursor-pointer hover:scale-105 transition-all'>
           <img className='w-14' src={assets.patients_icon} alt='' />
           <div>
             <p className='text-xl font-semibold text-secondary'>{dashData.patients}</p>
-            <p className='text-gray-400'>Patients</p>
+            <p className='text-[var(--app-ink)]/70'>Patients</p>
           </div>
         </div>
       </div>
 
-      <div className='bg-white rounded-xl shadow-sm overflow-hidden mt-10'>
-        <div className='flex items-center gap-2.5 px-4 py-4 border-b border-primary/10 bg-primary/5'>
-          <img src={assets.list_icon} alt="" />
+      <div className='bg-[var(--app-surface)] rounded-xl shadow-sm overflow-hidden mt-10 border border-[var(--app-ink)]/10'>
+        <div className='flex items-center gap-2.5 px-4 py-4 border-b border-[var(--app-ink)]/10 bg-[var(--app-ink)]/5 text-[var(--app-ink)] opacity-90'>
+          <img src={assets.list_icon} alt="" className="dark-invert" />
           <p className='font-semibold'>Latest Bookings</p>
         </div>
         <div className='pt-4'>
           {
             dashData.latestAppointments.map((item, index) => (
-              <div className='flex items-center px-6 py-3 gap-3 hover:bg-primary/5 transition-colors' key={index}>
+              <div className='flex items-center px-6 py-3 gap-3 hover:bg-[var(--app-ink)]/5 transition-colors text-[var(--app-ink)]' key={index}>
                 <img className='rounded-full w-10' src={item.userData.image} alt="" />
                 <div className='flex-1 text-sm'>
-                  <p className='text-gray-800 font-medium'>{item.userData.name}</p>
-                  <p className='text-gray-600'>{slotDateFormat(item.slotDate)}</p>
+                  <p className='font-medium opacity-90'>{item.userData.name}</p>
+                  <p className='opacity-70'>{slotDateFormat(item.slotDate)}</p>
                 </div>
                 {
                   item.cancelled

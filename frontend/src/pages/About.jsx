@@ -10,7 +10,10 @@ const About = () => {
       </div>
 
       <div  className='my-10 flex flex-col md:flex-row gap-12'>
-        <img className='w-full md:max-w-[360px]' src={about_image} alt="" />
+        <div className='w-full md:max-w-[360px] relative group'>
+          <div className='absolute -inset-3 bg-gradient-to-r from-primary/40 to-blue-500/40 rounded-3xl blur-lg opacity-60 group-hover:opacity-100 transition duration-500'></div>
+          <img className='relative w-full rounded-2xl border-4 border-[var(--app-surface)] shadow-xl object-cover transition-transform duration-500 group-hover:scale-[1.02]' src={about_image} alt="About Prescripto" />
+        </div>
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-[var(--app-ink)] opacity-80'>
             <p>Welcome to Prescripto, your trusted partner in managing your healthcare needs conveniently and efficiently.
              At Prescripto, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>

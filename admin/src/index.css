@@ -11,6 +11,19 @@
 	--app-danger: #ef4444;
 }
 
+[data-theme="dark"]{
+    --app-primary: #14b8a6;
+    --app-secondary: #1e40af;
+    --app-surface: #1e293b;
+    --app-ink: #f1f5f9;
+    --app-success: #16a34a;
+    --app-danger: #dc2626;
+}
+
+[data-theme="dark"] .dark-invert {
+    filter: brightness(0) invert(1) opacity(0.8);
+}
+
 @theme {
 	--color-primary: var(--app-primary);
 	--color-secondary: var(--app-secondary);
@@ -27,16 +40,14 @@
 :root {
 	--font-display: "DM Serif Display", serif;
 	--font-sans: "Sora", sans-serif;
-	--ink: #0f172a;
-	--bg: #f8fafc;
 }
 
 body {
 	font-family: var(--font-sans);
-	color: var(--ink);
-	background-color: var(--bg);
+	color: var(--app-ink);
+	background-color: var(--app-surface);
 }
-*{
+* {
   /* font-family: Outfit; */
 }
 
