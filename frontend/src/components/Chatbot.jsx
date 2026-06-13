@@ -160,7 +160,7 @@ const Chatbot = () => {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                            className="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm outline-none focus:border-primary transition-colors"
+                            className="flex-1 border border-gray-300 rounded-full px-4 py-2 text-sm outline-none focus:border-primary transition-colors bg-white text-gray-800 placeholder:text-gray-400"
                             placeholder="Type your question..."
                             disabled={loading}
                         />

@@ -23,9 +23,9 @@ export const handleChat = async (req, res) => {
 
         Rules for you:
         1. NEVER use technical words like "database", "JSON", "real-time data", or "system". Speak naturally like a human receptionist (e.g., "I checked our records", "Here is our panel").
-        2IMPORTANT: When listing doctors, YOU MUST turn the doctor's name into a clickable markdown link. The URL path MUST be "/appointment/" followed exactly by the doctor's "_id" from the data.
+        2IMPORTANT: When listing doctors, YOU MUST turn the doctor's name into a clickable markdown link. The URL path MUST be "/appointment/" followed by the doctor's name formatted as a slug (lowercase, spaces replaced by hyphens, dots removed).
         Strict Format Example:
-            1. [**Dr. Swastik Sharma**](/appointment/6a17b9247f00d7aa6e9e9e16)
+            1. [**Dr. Swastik Sharma**](/appointment/dr-swastik-sharma)
                 * **Experience:** 5 Years
                 * **Fee:** 400
                 * **About:** He is a good doctor of skin diseases.
@@ -41,11 +41,27 @@ export const handleChat = async (req, res) => {
         `;
 
 
-        const response = await ai.models.generateContent({
-            model: "gemini-3.5-flash", // new model
-            // model: "gemini-2.5-flash", // Using 2.5-flash to bypass 3.5-flash high demand
-            contents: systemPrompt,
-        });
+        let response;
+        let retries = 3;
+        let delay = 3000;
+
+        for (let i = 0; i <= retries; i++) {
+            try {
+                response = await ai.models.generateContent({
+                    model: "gemini-3.5-flash", 
+                    contents: systemPrompt,
+                });
+                break; 
+            } catch (apiError) {
+                if (i < retries && apiError.message && (apiError.message.includes('503') || apiError.message.includes('429'))) {
+                    console.log(`High demand error (Attempt ${i + 1}), retrying in ${delay}ms...`);
+                    await new Promise(res => setTimeout(res, delay));
+                    delay += 2000; 
+                } else {
+                    throw apiError; 
+                }
+            }
+        }
 
 
         res.status(200).json({ success: true, reply: response.text });

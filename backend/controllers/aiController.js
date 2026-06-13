@@ -1,4 +1,4 @@
-import { ai } from '../config/gemini.js'; 
+import { ai } from '../config/gemini.js';
 
 const predictSpecialist = async (req, res) => {
     try {
@@ -11,7 +11,7 @@ const predictSpecialist = async (req, res) => {
         // Array ko comma-separated string mein convert kar liya
         const symptomString = symptoms.join(", ");
 
-        
+
         const systemPrompt = `
         You are a highly accurate medical triage system. The user will provide a list of symptoms.
         Your ONLY job is to return the exact name of the medical specialty they should visit.
@@ -31,23 +31,40 @@ const predictSpecialist = async (req, res) => {
         3. If the symptoms are mixed, common, or ambiguous (like basic fever/cough), return "General physician".
         `;
 
-        // AI ko call kiya (Stateless approach)
-        const response = await ai.models.generateContent({
-            model: "gemini-3.5-flash",
-            contents: `Symptoms: ${symptomString}`,
-            config: {
-                systemInstruction: systemPrompt,
+        // AI ko call kiya (Stateless approach) with Retry Logic
+        let response;
+        let retries = 3;
+        let delay = 3000;
+
+        for (let i = 0; i <= retries; i++) {
+            try {
+                response = await ai.models.generateContent({
+                    model: "gemini-2.5-flash",
+                    contents: `Symptoms: ${symptomString}`,
+                    config: {
+                        systemInstruction: systemPrompt,
+                    }
+                });
+                break;
+            } catch (apiError) {
+                if (i < retries && apiError.message && (apiError.message.includes('503') || apiError.message.includes('429'))) {
+                    console.log(`Symptom Checker High demand (Attempt ${i + 1}), retrying in ${delay}ms...`);
+                    await new Promise(res => setTimeout(res, delay));
+                    delay += 2000;
+                } else {
+                    throw apiError;
+                }
             }
-        });
+        }
 
         // 🌟 .trim() lagana sabse zaroori hai! 
         // AI kabhi-kabhi aage-peeche invisible space ya Enter (\n) maar deta hai. 
         // Trim se string ekdum clean ho jayegi taaki frontend routing fail na ho.
         const predictedDoctor = response.text.trim();
 
-        res.json({ 
-            success: true, 
-            specialist: predictedDoctor 
+        res.json({
+            success: true,
+            specialist: predictedDoctor
         });
 
     } catch (error) {

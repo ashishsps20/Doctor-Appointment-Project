@@ -24,7 +24,7 @@ const Header = () => {
 
       {/* -----Right Side-----*/}
       <div className='md:w-1/2 relative'>
-        <img className='w-full md:absolute bottom-0 h-auto rounded-lg drop-shadow-2xl animate-[float_6s_ease-in-out_infinite]' src={assets.header_img} alt=''/>
+        <img className='w-full md:absolute bottom-[-10px] h-auto rounded-lg drop-shadow-2xl animate-[float_6s_ease-in-out_infinite] mb-[-10px] md:mb-0' src={assets.header_img} alt=''/>
       </div>
     </div>
   )

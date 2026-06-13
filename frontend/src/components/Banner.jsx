@@ -14,7 +14,7 @@ const Banner = () => {
         <div className='absolute top-[-20%] left-[-10%] w-72 h-72 bg-white/10 rounded-full blur-3xl animate-pulse-glow'></div>
         <div className='absolute bottom-[-20%] right-[-10%] w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse-glow' style={{ animationDelay: '1.5s' }}></div>
         {/* ------left  side---- */}
-        <div className='flex-1 py-8 sm:py-10 md:py-16 lg:py-24 lg:pl-5'>
+        <div className='flex-1 py-8 sm:py-10 md:py-20 lg:py-28 lg:pl-5'>
             <div className='text-xl sm:text-2xl md:text-3xl lg:text-5xl font-semibold text-white'>
                 <p>Book Appointment</p>
                 <p className='mt-4'>With 100+ Trusted Doctors</p>
@@ -24,7 +24,7 @@ const Banner = () => {
 
         {/* -----right side -------*/}
         <div className='hidden md:block md:w-1/2 lg:w-[370px] relative'>
-            <img className='w-full absolute bottom-0 right-0 max-w-md animate-[float_6s_ease-in-out_infinite]' style={{ animationDelay: '0.5s' }} src={assets.appointment_img} alt=''/>
+            <img className='w-full absolute bottom-[-10px] right-0 max-w-md animate-[float_6s_ease-in-out_infinite]' style={{ animationDelay: '0.5s' }} src={assets.appointment_img} alt=''/>
         </div>
     </div>
   )

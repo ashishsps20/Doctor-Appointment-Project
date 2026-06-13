@@ -60,7 +60,7 @@ const SymptomChecker = () => {
     return (
         // 🌟 YEH HAI WO MAIN PARENT DIV JO MISSING THA 🌟
         <div className="p-5 max-w-4xl mx-auto min-h-[60vh]">
-            <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">What are you feeling?</h2>
+            <h2 className="text-3xl font-semibold mb-8 text-center text-[var(--app-ink)]">What are you feeling?</h2>
 
             {/* Display Checkboxes (3 Columns & Pro UI) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-10">
@@ -72,7 +72,7 @@ const SymptomChecker = () => {
                             className={`flex items-center gap-3 cursor-pointer border p-4 rounded-xl transition-all duration-200
                                 ${isSelected
                                     ? 'bg-primary/10 border-primary/20 text-primary shadow-sm'
-                                    : 'bg-white border-gray-200 hover:bg-gray-50 hover:border-secondary/30 hover:shadow-md'
+                                    : 'bg-[var(--app-surface)] border-[var(--app-ink)]/15 hover:border-secondary/30 hover:shadow-md'
                                 }
                             `}
                         >
@@ -82,7 +82,7 @@ const SymptomChecker = () => {
                                 checked={isSelected}
                                 onChange={() => handleToggle(sym)}
                             />
-                            <span className="font-medium text-sm">{sym}</span>
+                            <span className="font-medium text-sm text-[var(--app-ink)]">{sym}</span>
                         </label>
                     );
                 })}
@@ -102,7 +102,7 @@ const SymptomChecker = () => {
             {/* Display Result & Redirect Button */}
             {prediction && (
                 <div className="mt-12 p-8 bg-primary/10 border border-primary/20 rounded-2xl text-center shadow-sm max-w-2xl mx-auto">
-                    <p className="text-gray-600 mb-2 text-lg">Based on your symptoms, our AI recommends:</p>
+                    <p className="text-[var(--app-ink)] opacity-80 mb-2 text-lg">Based on your symptoms, our AI recommends:</p>
                     <p className="text-3xl font-bold text-primary mb-6">{prediction}</p>
 
                     <button
