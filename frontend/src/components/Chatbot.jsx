@@ -18,7 +18,7 @@ const Chatbot = () => {
     const [messages, setMessages] = useState(() => {
         const savedChat = sessionStorage.getItem('prescripto_current_chat');
         return savedChat ? JSON.parse(savedChat) : [
-            { role: 'model', parts: [{ text: 'Hi! I am the Prescripto AI Assistant. How can I help you today?' }] }
+            { role: 'model', parts: [{ text: 'Hi! I am the HealthCare AI Assistant. How can I help you today?' }] }
         ];
     });
 
@@ -89,7 +89,7 @@ const Chatbot = () => {
                     <div className="bg-primary text-white p-4 font-bold flex justify-between items-center shadow-md">
                         <div className="flex items-center gap-2">
                             <span className="text-2xl">🤖</span>
-                            <span>Prescripto AI</span>
+                            <span>HealthCare AI</span>
                         </div>
                         <div className="flex items-center gap-4">
                             {/* 🌟 Naya Expand Button */}

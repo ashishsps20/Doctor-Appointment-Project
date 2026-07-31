@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets_frontend/assets'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext';
+import FullLogo from './FullLogo';
 const Navigation = () => {
     const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
@@ -24,7 +25,13 @@ const Navigation = () => {
     return (
         <nav className='sticky top-0 z-50 w-full backdrop-blur-md bg-[var(--app-surface)]/80 text-[var(--app-ink)] transition-colors duration-300 shadow-sm border-b border-[var(--app-ink)]/10'>
             <div className='flex items-center justify-between text-sm py-4 px-6 md:px-10 lg:px-20'>
-                <img onClick={() => navigate('/')} className='w-44 cursor-pointer logo-img' src={assets.logo} alt='' />
+                {/* <img onClick={() => navigate('/')} className='w-44 cursor-pointer logo-img' src={assets.logo} alt='' /> */}
+                <FullLogo
+                    text="HealthCare"
+                    textColor={darkMode ? "text-white" : "text-[#00609a]"}
+                    logoClassName="w-14 h-14"
+                    onClick={() => navigate('/')}
+                />
                 <ul className='hidden md:flex items-center gap-5 font-medium'>
                     <NavLink to='/'>
                         <li className='py-1 text-[var(--app-ink)] hover:text-primary transition-colors cursor-pointer'>Home</li>
@@ -49,7 +56,7 @@ const Navigation = () => {
                 </ul>
                 <div className='flex items-center gap-4 '>
                     {/* Theme Toggle Button */}
-                    <button 
+                    <button
                         onClick={toggleTheme}
                         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
                         className='hidden md:flex items-center gap-2 cursor-pointer px-4 py-2 rounded-full bg-[var(--app-surface)]/50 backdrop-blur-sm border border-[var(--app-ink)]/10 shadow-sm hover:shadow-md hover:border-primary/50 transition-all duration-300 font-medium text-sm text-[var(--app-ink)] group'
@@ -83,7 +90,7 @@ const Navigation = () => {
                                         <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-profile') }} className='text-[var(--app-ink)] hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Profile</p>
                                         <p onClick={(e) => { e.stopPropagation(); setOpen(false); navigate('/my-appointments') }} className='text-[var(--app-ink)] hover:text-primary cursor-pointer py-2 px-3 rounded hover:bg-primary/10 transition-colors text-sm'>My Appointments</p>
                                         <hr className='my-1 border-primary/15' />
-                                        <button 
+                                        <button
                                             onClick={(e) => { e.stopPropagation(); toggleTheme(); }}
                                             className='w-full flex items-center gap-2 text-left py-2 px-3 rounded hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors font-medium text-sm text-[var(--app-ink)] group'
                                         >

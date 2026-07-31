@@ -12,15 +12,15 @@ const About = () => {
       <div  className='my-10 flex flex-col md:flex-row gap-12'>
         <div className='w-full md:max-w-[360px] relative group'>
           <div className='absolute -inset-3 bg-gradient-to-r from-primary/40 to-blue-500/40 rounded-3xl blur-lg opacity-60 group-hover:opacity-100 transition duration-500'></div>
-          <img className='relative w-full rounded-2xl border-4 border-[var(--app-surface)] shadow-xl object-cover transition-transform duration-500 group-hover:scale-[1.02]' src={about_image} alt="About Prescripto" />
+          <img className='relative w-full rounded-2xl border-4 border-[var(--app-surface)] shadow-xl object-cover transition-transform duration-500 group-hover:scale-[1.02]' src={about_image} alt="About HealthCare" />
         </div>
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-[var(--app-ink)] opacity-80'>
-            <p>Welcome to Prescripto, your trusted partner in managing your healthcare needs conveniently and efficiently.
-             At Prescripto, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
-            <p>Prescripto is committed to excellence in healthcare technology. enhance our platform,
-            integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, Prescripto is here to support you every step of the way.</p>
+            <p>Welcome to HealthCare, your trusted partner in managing your healthcare needs conveniently and efficiently.
+             At HealthCare, we understand the challenges individuals face when it comes to scheduling doctor appointments and managing their health records.</p>
+            <p>HealthCare is committed to excellence in healthcare technology. enhance our platform,
+            integrating the latest advancements to improve user experience and deliver superior service. Whether you're booking your first appointment or managing ongoing care, HealthCare is here to support you every step of the way.</p>
             <b className='text-[var(--app-ink)]'>Our Vision </b>
-            <p>Our vision at Prescripto is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
+            <p>Our vision at HealthCare is to create a seamless healthcare experience for every user. We aim to bridge the gap between patients and healthcare providers, making it easier for you to access the care you need, when you need it.</p>
         </div>
       </div>
 

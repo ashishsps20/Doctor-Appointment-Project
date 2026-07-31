@@ -12,14 +12,14 @@ const Contact = () => {
 
                 <div className='w-full md:max-w-[360px] relative group'>
                     <div className='absolute -inset-3 bg-gradient-to-r from-primary/40 to-blue-500/40 rounded-3xl blur-lg opacity-60 group-hover:opacity-100 transition duration-500'></div>
-                    <img className='relative w-full rounded-2xl border-4 border-[var(--app-surface)] shadow-xl object-cover transition-transform duration-500 group-hover:scale-[1.02]' src={contact_image} alt="Contact Prescripto" />
+                    <img className='relative w-full rounded-2xl border-4 border-[var(--app-surface)] shadow-xl object-cover transition-transform duration-500 group-hover:scale-[1.02]' src={contact_image} alt="Contact HealthCare" />
                 </div>
 
                 <div className='flex flex-col justify-center items-start gap-6'>
                     <p className='text-[var(--app-ink)] text-lg font-semibold'>OUR OFFICE </p>
                     <p className='text-[var(--app-ink)] opacity-75'> 54709 Willms Station <br />Suite 350, Washington, USA</p>
                     <p className='text-[var(--app-ink)] opacity-75'> Tel: (415) 555-0132 <br />  Email: greatstackdev@gmail.com</p>
-                    <p className='font-semibold text-lg text-[var(--app-ink)]'> Careers at PRESCRIPTO</p>
+                    <p className='font-semibold text-lg text-[var(--app-ink)]'> Careers at HEALTHCARE</p>
                     <p className='text-[var(--app-ink)] opacity-75'> Learn more about our teams and job openings.</p>
                     <button className='group flex items-center gap-2 bg-[var(--app-ink)] text-[var(--app-surface)] px-8 py-3.5 text-sm font-medium rounded-full hover:bg-primary hover:text-white transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg'>
                         Explore Jobs
