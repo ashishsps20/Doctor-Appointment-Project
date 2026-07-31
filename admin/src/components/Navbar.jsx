@@ -4,6 +4,7 @@ import { AdminContext } from '../context/AdminContext'
 import { useNavigate } from 'react-router-dom'
 import { DoctorContext } from '../context/DoctorContext'
 import { AppContext } from '../context/AppContext'
+import FullLogo from './FullLogo'
 
 const Navbar = () => {
 
@@ -24,7 +25,15 @@ const Navbar = () => {
   return (
     <div className='flex items-center justify-between bg-[var(--app-surface)] text-[var(--app-ink)] px-6 py-4 shadow-md border-b border-[var(--app-ink)]/10'>
         <div className='flex items-center gap-3 text-xl font-semibold'>
-            <img className='w-36 sm:w-48 cursor-pointer' src={assets.admin_logo} alt="Logo" />
+            <div className='flex flex-col'>
+                <FullLogo 
+                    text="HealthCare" 
+                    textColor={darkMode ? "text-white" : "text-[#00609a]"} 
+                    logoClassName="w-10 h-10" 
+                    onClick={() => navigate('/')} 
+                />
+                <span className={`text-[10px] font-medium tracking-wide uppercase mt-0.5 ml-14 opacity-70 ${darkMode ? "text-gray-300" : "text-gray-500"}`}>Dashboard Panel</span>
+            </div>
             <p className='border px-2.5 py-0.5 rounded-full border-primary/20 text-secondary bg-primary/5'>{aToken ? 'Welcome, Admin!' : 'Doctor Appointment App'}</p>
         </div>
         
