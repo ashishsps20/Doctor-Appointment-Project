@@ -5,6 +5,12 @@ A comprehensive, AI-powered Full-Stack Doctor Appointment System built with the 
 ## 📌 Overview
 This project is a complete healthcare appointment booking system that connects patients with doctors. It features an AI-powered Symptom Checker and a Medical Assistant Chatbot, helping patients find the right specialist based on their symptoms. The platform includes a patient-facing frontend, a secure administrative dashboard, and a robust backend API.
 
+## 🚀 Live Demo
+
+* **Patient Frontend**: [https://healthcaredoctorappointment-green.vercel.app/](https://healthcaredoctorappointment-green.vercel.app/)
+* **Admin Dashboard**: [https://healthcareadmindoctorpanel.vercel.app/](https://healthcareadmindoctorpanel.vercel.app/)
+* **Backend API**: [https://doctor-appointment-project-bsfl.onrender.com/](https://doctor-appointment-project-bsfl.onrender.com/)
+
 ## ✨ Features
 
 ### Patient Features (Frontend)
