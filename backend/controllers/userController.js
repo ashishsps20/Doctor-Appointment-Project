@@ -39,7 +39,11 @@ const registerUser = async (req, res) => {
 		const newUser = new userModel(userData)
 		const user = await newUser.save()
 
-		const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+		const token = jwt.sign(
+            { id: user._id },
+             process.env.JWT_SECRET,
+             { expiresIn: "1d"}
+            )
 
 		res.status(200).json({ success: true, message: 'User registered successfully', token })
 	} catch (error) {
@@ -78,7 +82,7 @@ const loginUser = async (req, res) => {
 // api to get user info
 const getProfile = async (req, res) => {
 	try {
-		const userId = req.userId
+		const userId = req.userId // from middleware verifyToken
 		const userData = await userModel.findById(userId).select('-password')
 		if (!userData) {
 			return res.status(404).json({ success: false, message: 'User not found' })
@@ -93,7 +97,7 @@ const getProfile = async (req, res) => {
 // API to update user profile
 const updateProfile = async (req, res) => {
     try {
-        const userId = req.userId
+        const userId = req.userId // from middleware verifyToken
         const { name,phone,address,dob,gender} = req.body || {}
         const imageFile = req.file
         const updateData = {}
@@ -101,7 +105,19 @@ const updateProfile = async (req, res) => {
         if (!name || !phone || !dob|| !gender) 
             return res.status(400).json({ success: false, message: 'Name, phone, dob and gender are required' })
         
-        await userModel.findByIdAndUpdate(userId,{name,phone,address:JSON.parse(address),dob,gender}) // check if user exists
+        const checkUser = await userModel.findById(userId)
+        if (!checkUser) {
+            return res.status(404).json({ success: false, message: 'User not found' })
+        }
+
+        await userModel.findByIdAndUpdate(userId,
+                {
+                    name,
+                    phone,
+                    address:JSON.parse(address),
+                    dob,
+                    gender
+                }) 
 
 		if (imageFile) {
 			const imageUpdate = await new Promise((resolve, reject) => {
