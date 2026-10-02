@@ -34,7 +34,7 @@ export const changeAvailability = async (req, res) => {
 
 export const doctorsList = async (req, res) => {
     try {
-        const doctors = await doctorModel.find().select(['-password', '-email']).sort({ date: -1 })
+        // 🌟 1. Pehle Redis (Cache) mein check karo
         const cachedDoctors = await redisClient.get('all_doctors');
 
         if (cachedDoctors) {
@@ -45,7 +45,7 @@ export const doctorsList = async (req, res) => {
 
         // 🌟 2. Agar Redis khali hai, toh MongoDB (Database) ke paas jao
         console.log("🐌 Serving from MongoDB Database! (Slow)");
-        // const doctors = await doctorModel.find().select(['-password','-email']).sort({ date: -1 }) 
+        const doctors = await doctorModel.find().select(['-password', '-email']).sort({ date: -1 })
 
         // 🌟 3. Agli baar ke liye Redis mein save kar do (Expire in 3600 seconds = 1 Hour)
         await redisClient.setEx('all_doctors', 3600, JSON.stringify(doctors));
@@ -69,7 +69,7 @@ export const loginDoctor = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, doctor.password)
-        if (!isMatch) {
+        if (isMatch) {
             const token = jwt.sign({ id: doctor._id }, process.env.JWT_SECRET)
             res.json({ success: true, token })
         } else {
